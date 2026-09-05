@@ -1,6 +1,6 @@
 # Plantilla de presentaciones
 
-**→ [Ver la plantilla en vivo](https://fernanda-liz.github.io/plantilla-presentaciones/)** ·
+**→ [Ver la plantilla en vivo](https://fernanda-liz.github.io/plantillas/presentaciones/)** ·
 [PDF de ejemplo](./ejemplo-exportado.pdf) · [Instrucciones de uso](./INSTRUCCIONES.md)
 
 33 diapositivas en español, navy + dorado, cada una con un **layout distinto**. No es un diseño:
@@ -16,8 +16,8 @@ decidiste **no** hacer.
 ## Empezar
 
 ```bash
-git clone https://github.com/fernanda-liz/plantilla-presentaciones.git
-cd plantilla-presentaciones
+git clone https://github.com/fernanda-liz/fernanda-liz.github.io.git
+cd fernanda-liz.github.io/plantillas/presentaciones
 python3 servidor.py
 # abrir http://localhost:4180/
 ```
@@ -50,11 +50,12 @@ Si estás en una conversación donde la skill no está disponible (Claude.ai, ot
 esto y pegalo:
 
 ```
-Necesito armar una presentación usando mi plantilla propia, que está en:
-https://github.com/fernanda-liz/plantilla-presentaciones
+Necesito armar una presentación usando mi plantilla propia, que está publicada en:
+https://fernanda-liz.github.io/plantillas/presentaciones/
+(código: https://github.com/fernanda-liz/fernanda-liz.github.io)
 
-Antes de escribir nada, leé el index.html y el INSTRUCCIONES.md de ese repo para
-entender los 33 layouts disponibles y qué pide cada espacio.
+Antes de escribir nada, leé su index.html y su INSTRUCCIONES.md para entender los
+33 layouts disponibles y qué pide cada espacio.
 
 La presentación es sobre: [TEMA]
 Para: [AUDIENCIA — comisión de tesis, curso, cliente]
