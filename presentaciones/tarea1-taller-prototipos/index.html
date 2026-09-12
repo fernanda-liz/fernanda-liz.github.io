@@ -1569,7 +1569,7 @@
       /* ── 24 · Foto con leyenda destacada ──────────────────────────────── */
       .foto-leyenda { display: grid; grid-template-columns: 1.55fr 1fr; gap: 2.6vw; align-items: center; height: 100%; }
       .foto-marco { background: var(--c-bg-alt); border: 1px solid var(--c-border); height: 54vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-      .foto-marco img { width: 100%; height: 100%; object-fit: cover; }
+      .foto-marco img { width: 100%; height: 100%; object-fit: contain; }
       .foto-num { font-family: var(--f-display); font-size: 3.4vw; color: var(--c-accent); line-height: 1; margin: 0 0 1.2vh; }
       .slide--photo .h3 { margin-bottom: 1.4vh; }
       .slide--photo .body { color: var(--c-fg-2); }
@@ -2006,7 +2006,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Magíster en Ciencias del Diseño, UAI · Septiembre 2026</span>
-          <span class="label muted">01 / 10</span>
+          <span class="label muted">01 / 11</span>
         </div>
       </section>
 
@@ -2149,22 +2149,88 @@
 
         <!-- feedback loop (dashed) -->
         <path d="M1040,800 L1560,800 L1560,200 L1046,200" fill="none" stroke="#6478c2" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-        <rect x="1400" y="458" width="160" height="46" rx="6" fill="#6478c2"/>
-        <text x="1480" y="477" text-anchor="middle" font-size="10" font-weight="700" fill="#eef0f5">SIGUIENTE PASO:</text>
-        <text x="1480" y="492" text-anchor="middle" font-size="10" fill="#eef0f5">lapislázuli real → media resolución</text>
+        <rect x="1385" y="452" width="190" height="60" rx="6" fill="#6478c2"/>
+        <text x="1480" y="470" text-anchor="middle" font-size="10" font-weight="700" fill="#eef0f5">SIGUIENTE ENSAYO:</text>
+        <text x="1480" y="484" text-anchor="middle" font-size="9.5" fill="#eef0f5">SLA Creality + esmalte vitrificable</text>
+        <text x="1480" y="497" text-anchor="middle" font-size="9.5" fill="#eef0f5">%wt de literatura (pendiente) → media res.</text>
 </svg>
           </div>
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">02 / 10</span>
+          <span class="label muted">02 / 11</span>
+        </div>
+      </section>
+
+      <section class="slide dark slide--diagram">
+        <header class="slide-chrome">
+          <span class="label muted">Flujo de trabajo</span>
+          <span class="label muted">03</span>
+        </header>
+        <div class="slide-body" style="justify-content:flex-start;">
+          <h2 class="h2" style="flex:0 0 auto;" data-anim="fade-up" data-delay="0">Un ciclo que se repite en cada carga nueva</h2>
+          <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;" data-anim="fade-up" data-delay="1">
+<svg viewBox="0 0 1400 560" style="width:100%;height:auto;max-height:100%;display:block;" role="img"
+     aria-label="Diagrama de ciclo del proceso de pruebas: dosificar y mezclar, fabricar probeta, evaluar resultado, registrar hallazgo, publicar y ajustar carga, con retorno a la siguiente iteración.">
+
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#6478c2"/>
+          </marker>
+        </defs>
+
+        <text x="700" y="95" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="0.5" fill="#d9b25a">PROBAR Y EVALUAR</text>
+
+        <rect x="60" y="120" width="360" height="100" rx="6" fill="#161d38" stroke="#263156"/>
+        <text x="86" y="158" font-size="15" font-weight="700" fill="#eef0f5">Dosificar y mezclar</text>
+        <text x="86" y="182" font-size="11.5" fill="#98a0c2">Pesaje · %wt según ruta (SLA o FDM)</text>
+
+        <rect x="460" y="120" width="360" height="100" rx="6" fill="#161d38" stroke="#263156"/>
+        <text x="486" y="158" font-size="15" font-weight="700" fill="#eef0f5">Fabricar probeta</text>
+        <text x="486" y="182" font-size="11.5" fill="#98a0c2">Curar en SLA (UV) · fundir en FDM (sandwichera)</text>
+
+        <rect x="860" y="120" width="360" height="100" rx="6" fill="#161d38" stroke="#263156"/>
+        <text x="886" y="158" font-size="15" font-weight="700" fill="#eef0f5">Evaluar resultado</text>
+        <text x="886" y="182" font-size="11.5" fill="#98a0c2">Curado visual · encapsulado táctil</text>
+
+        <line x1="420" y1="170" x2="460" y2="170" stroke="#6478c2" stroke-width="2" marker-end="url(#arrow2)"/>
+        <line x1="820" y1="170" x2="860" y2="170" stroke="#6478c2" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <path d="M1040,220 L1040,270 L240,270 L240,320" fill="none" stroke="#6478c2" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <text x="700" y="315" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="0.5" fill="#d9b25a">REGISTRAR Y DECIDIR</text>
+
+        <rect x="60" y="340" width="360" height="100" rx="6" fill="#10152a" stroke="#263156"/>
+        <text x="86" y="378" font-size="15" font-weight="700" fill="#eef0f5">Registrar hallazgo</text>
+        <text x="86" y="402" font-size="11.5" fill="#98a0c2">Bitácora: carga, condición, resultado, foto</text>
+
+        <rect x="460" y="340" width="360" height="100" rx="6" fill="#10152a" stroke="#263156"/>
+        <text x="486" y="378" font-size="15" font-weight="700" fill="#eef0f5">Publicar</text>
+        <text x="486" y="402" font-size="11.5" fill="#98a0c2">Wiki de tesis · repositorio de presentaciones</text>
+
+        <rect x="860" y="340" width="360" height="100" rx="6" fill="#10152a" stroke="#263156"/>
+        <text x="886" y="378" font-size="15" font-weight="700" fill="#eef0f5">Ajustar y decidir</text>
+        <text x="886" y="402" font-size="11.5" fill="#98a0c2">Siguiente %wt, ruta, o pasar de nivel</text>
+
+        <line x1="420" y1="390" x2="460" y2="390" stroke="#6478c2" stroke-width="2" marker-end="url(#arrow2)"/>
+        <line x1="820" y1="390" x2="860" y2="390" stroke="#6478c2" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <path d="M1040,440 L1040,500 L60,500 L60,220" fill="none" stroke="#6478c2" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow2)"/>
+        <rect x="560" y="486" width="280" height="28" rx="14" fill="#6478c2"/>
+        <text x="700" y="505" text-anchor="middle" font-size="10.5" font-weight="700" fill="#eef0f5" letter-spacing="0.3">SIGUIENTE ITERACIÓN</text>
+</svg>
+          </div>
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Sistema de testing</span>
+          <span class="label muted">03 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--diagram">
         <header class="slide-chrome">
           <span class="label muted">Subsistemas · componentes</span>
-          <span class="label muted">03</span>
+          <span class="label muted">04</span>
         </header>
         <div class="slide-body" style="justify-content:flex-start;">
           <h2 class="h2" style="flex:0 0 auto;" data-anim="fade-up" data-delay="0">Media resolución: material real, probeta normalizada</h2>
@@ -2308,14 +2374,14 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">03 / 10</span>
+          <span class="label muted">04 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--diagram">
         <header class="slide-chrome">
           <span class="label muted">Subsistemas · componentes</span>
-          <span class="label muted">04</span>
+          <span class="label muted">05</span>
         </header>
         <div class="slide-body" style="justify-content:flex-start;">
           <h2 class="h2" style="flex:0 0 auto;" data-anim="fade-up" data-delay="0">Alta resolución: catálogo especulativo antes que pieza final</h2>
@@ -2475,7 +2541,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">04 / 10</span>
+          <span class="label muted">05 / 11</span>
         </div>
       </section>
 
@@ -2492,14 +2558,14 @@
         </p>
         <div class="slide-foot" style="position:absolute;bottom:var(--gap-lg);left:var(--gap-lg);right:var(--gap-lg);display:flex;justify-content:space-between;">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">05 / 10</span>
+          <span class="label muted">06 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--photo">
         <header class="slide-chrome">
           <span class="label muted">Resultados · ruta SLA</span>
-          <span class="label muted">06</span>
+          <span class="label muted">07</span>
         </header>
         <div class="slide-body">
           <div class="foto-leyenda">
@@ -2524,14 +2590,14 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">06 / 10</span>
+          <span class="label muted">07 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--photo">
         <header class="slide-chrome">
           <span class="label muted">Resultados · ruta SLA</span>
-          <span class="label muted">07</span>
+          <span class="label muted">08</span>
         </header>
         <div class="slide-body">
           <div class="foto-leyenda">
@@ -2556,14 +2622,14 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">07 / 10</span>
+          <span class="label muted">08 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--photo">
         <header class="slide-chrome">
           <span class="label muted">Resultados · ruta FDM</span>
-          <span class="label muted">08</span>
+          <span class="label muted">09</span>
         </header>
         <div class="slide-body">
           <div class="foto-leyenda">
@@ -2588,7 +2654,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">08 / 10</span>
+          <span class="label muted">09 / 11</span>
         </div>
       </section>
 
@@ -2627,7 +2693,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">09 / 10</span>
+          <span class="label muted">10 / 11</span>
         </div>
       </section>
 
