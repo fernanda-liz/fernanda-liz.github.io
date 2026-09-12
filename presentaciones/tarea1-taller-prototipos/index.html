@@ -125,6 +125,14 @@
         transition: transform var(--dur-slide) var(--ease-slide);
         will-change: transform;
       }
+      /* Quick, elegant fade dip timed to the slide transition: the outgoing
+         slide vanishes fast, the incoming one settles back in, masking the
+         lateral motion instead of just sliding sideways. */
+      @keyframes deckFade { 0% { opacity: 1; } 28% { opacity: 0.05; } 100% { opacity: 1; } }
+      #deck.is-transitioning { animation: deckFade var(--dur-slide) var(--ease-slide) both; }
+      @media (prefers-reduced-motion: reduce) {
+        #deck.is-transitioning { animation: none; }
+      }
 
       /* Slide base — each slide occupies exactly one full viewport */
       .slide {
@@ -1470,6 +1478,8 @@
           height: auto !important;
           transform: none !important;
           transition: none !important;
+          animation: none !important;
+          opacity: 1 !important;
         }
         .slide {
           width: 100% !important;
@@ -2006,7 +2016,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Magíster en Ciencias del Diseño, UAI · Septiembre 2026</span>
-          <span class="label muted">01 / 14</span>
+          <span class="label muted">01 / 11</span>
         </div>
       </section>
 
@@ -2149,16 +2159,17 @@
 
         <!-- feedback loop (dashed) -->
         <path d="M1040,800 L1560,800 L1560,200 L1046,200" fill="none" stroke="#6478c2" stroke-width="2" class="d-conector" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-        <rect x="1385" y="452" width="190" height="60" rx="6" fill="#6478c2"/>
-        <text x="1480" y="470" text-anchor="middle" font-size="14" font-weight="700" fill="#eef0f5">SIGUIENTE ENSAYO:</text>
-        <text x="1480" y="484" text-anchor="middle" font-size="11.5" fill="#eef0f5">SLA Creality + esmalte vitrificable</text>
-        <text x="1480" y="497" text-anchor="middle" font-size="11.5" fill="#eef0f5">%wt de literatura (pendiente) → media res.</text>
+        <line x1="640" y1="450" x2="622" y2="450" stroke="#6478c2" stroke-width="2" class="d-flecha" marker-end="url(#arrow)"/>
+        <rect x="642" y="418" width="270" height="64" rx="6" fill="#6478c2"/>
+        <text x="777" y="438" text-anchor="middle" font-size="14" font-weight="700" fill="#eef0f5">SIGUIENTE ENSAYO SLA:</text>
+        <text x="777" y="454" text-anchor="middle" font-size="11.5" fill="#eef0f5">Creality + esmalte vitrificable</text>
+        <text x="777" y="469" text-anchor="middle" font-size="11.5" fill="#eef0f5">%wt de literatura (pendiente) → media res.</text>
 </svg>
           </div>
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">02 / 14</span>
+          <span class="label muted">02 / 11</span>
         </div>
       </section>
 
@@ -2177,7 +2188,7 @@
             </div>
             <div class="caja">
               <p class="caja-titulo" style="color:var(--c-propio)">FASE 2 · CURÓ Y TRASLÚCIDO</p>
-              <img src="img/lazulform-evaluacion-3__fig-10-fase2-fgh-superior.jpg" alt="Tres discos de resina UV curados, cemento esmalte y mixto al 7 por ciento de carga, vistos desde arriba" style="width:100%;height:30vh;object-fit:contain;background:var(--c-bg-alt);border:1px solid var(--c-border);border-radius:8px;margin:0.8rem 0;">
+              <img src="img/lazulform-evaluacion-3__fig-11-fase2-viales-ghf.jpg" alt="Tres viales de resina UV curada con tapón de corcho, cemento (F), esmalte (G) y mixto (H) al 7 por ciento de carga" style="width:100%;height:30vh;object-fit:contain;background:var(--c-bg-alt);border:1px solid var(--c-border);border-radius:8px;margin:0.8rem 0;">
               <p>Carga reducida a 7% + 13&nbsp;ml de resina. F (cemento), G (esmalte) y H (mixto) curaron por completo en 3&nbsp;min por capa. G fue el m&aacute;s parejo y saturado.</p>
             </div>
           </div>
@@ -2185,7 +2196,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">03 / 14</span>
+          <span class="label muted">03 / 11</span>
         </div>
       </section>
 
@@ -2215,7 +2226,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">04 / 14</span>
+          <span class="label muted">04 / 11</span>
         </div>
       </section>
 
@@ -2242,7 +2253,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">05 / 14</span>
+          <span class="label muted">05 / 11</span>
         </div>
       </section>
 
@@ -2393,7 +2404,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">06 / 14</span>
+          <span class="label muted">06 / 11</span>
         </div>
       </section>
 
@@ -2560,7 +2571,7 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Diseño del set up</span>
-          <span class="label muted">07 / 14</span>
+          <span class="label muted">07 / 11</span>
         </div>
       </section>
 
@@ -2598,127 +2609,14 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">08 / 14</span>
-        </div>
-      </section>
-
-      <section class="slide dark slide--chapter">
-        <div class="chapter-num" data-anim="fade-in" data-delay="0">
-          01 · RESULTADOS
-        </div>
-        <div class="chapter-rule" data-anim="reveal-right" data-delay="1"></div>
-        <h1 class="h1" style="max-width: 70%; margin-bottom: var(--gap-md)" data-anim="fade-up" data-delay="2">
-          Lo que pasó en el banco de pruebas de baja resolución
-        </h1>
-        <p class="lead muted" style="max-width: 55%" data-anim="fade-up" data-delay="3">
-          Dos rutas, dos mecanismos de fracaso distintos, y un rango de carga que converge de todos modos.
-        </p>
-        <div class="slide-foot" style="position:absolute;bottom:var(--gap-lg);left:var(--gap-lg);right:var(--gap-lg);display:flex;justify-content:space-between;">
-          <span class="label muted">Sistema de testing</span>
-          <span class="label muted">09 / 14</span>
-        </div>
-      </section>
-
-      <section class="slide dark slide--photo">
-        <header class="slide-chrome">
-          <span class="label muted">Resultados · ruta SLA</span>
-          <span class="label muted">10</span>
-        </header>
-        <div class="slide-body">
-          <div class="foto-leyenda">
-            <div class="foto-marco" data-anim="scale-in" data-delay="0">
-              <img src="img/lazulform-evaluacion-3__fig-02-discos-sla-pigmentados.png" alt="Tres discos SLA curados a 7% de carga: cemento, esmalte y mixto." />
-            </div>
-            <div>
-              <p class="foto-num" data-anim="fade-up" data-delay="1">04</p>
-              <p class="label muted" style="color:var(--c-propio);font-weight:700;letter-spacing:.08em;margin-bottom:.4rem;" data-anim="fade-in" data-delay="0">FUNCIONÓ</p>
-              <h3 class="h3" data-anim="fade-up" data-delay="2">SLA: a 7% de carga, curó completo y translúcido</h3>
-              <p class="body" data-anim="fade-up" data-delay="3">Fase 2: cemento (F), esmalte (G) y mixto (H) curaron por completo bajo 36&nbsp;W de UV. G (esmalte) fue el más parejo y saturado de los tres.</p>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="4">
-                <dt>Condición</dt>
-                <dd>Carga 7&nbsp;wt% · UV 36W · capas de 3mm</dd>
-              </dl>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="5">
-                <dt>Registro</dt>
-                <dd>Informe Evaluación 3, Fase 2 (Cabezas &amp; López, 2026)</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div class="slide-foot">
-          <span class="label muted">Sistema de testing</span>
-          <span class="label muted">10 / 14</span>
-        </div>
-      </section>
-
-      <section class="slide dark slide--photo">
-        <header class="slide-chrome">
-          <span class="label muted">Resultados · ruta SLA</span>
-          <span class="label muted">11</span>
-        </header>
-        <div class="slide-body">
-          <div class="foto-leyenda">
-            <div class="foto-marco" data-anim="scale-in" data-delay="0">
-              <img src="img/lazulform-evaluacion-3__fig-05-pruebas-a-e-no-curo.jpg" alt="Cinco frascos de resina SLA sin curar, vistos desde arriba, con resina líquida visible bajo la superficie." />
-            </div>
-            <div>
-              <p class="foto-num" data-anim="fade-up" data-delay="1">05</p>
-              <p class="label muted" style="color:var(--c-fallida);font-weight:700;letter-spacing:.08em;margin-bottom:.4rem;" data-anim="fade-in" data-delay="0">NO FUNCIONÓ</p>
-              <h3 class="h3" data-anim="fade-up" data-delay="2">SLA: a 20–33% de carga, no curó</h3>
-              <p class="body" data-anim="fade-up" data-delay="3">Fase 1: las 5 pruebas (A–E) quedaron con resina líquida bajo una película curada, la “cáscara curada, núcleo líquido”. La opacidad del filler bloquea el paso de luz UV; no es un problema de la resina.</p>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="4">
-                <dt>Condición</dt>
-                <dd>Carga 20–33&nbsp;wt% · mismo protocolo UV</dd>
-              </dl>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="5">
-                <dt>Registro</dt>
-                <dd>Informe Evaluación 3, Fase 1 (Cabezas &amp; López, 2026)</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div class="slide-foot">
-          <span class="label muted">Sistema de testing</span>
-          <span class="label muted">11 / 14</span>
-        </div>
-      </section>
-
-      <section class="slide dark slide--photo">
-        <header class="slide-chrome">
-          <span class="label muted">Resultados · ruta FDM</span>
-          <span class="label muted">12</span>
-        </header>
-        <div class="slide-body">
-          <div class="foto-leyenda">
-            <div class="foto-marco" data-anim="scale-in" data-delay="0">
-              <img src="img/lazulform-evaluacion-3__fig-08-pa-pb-pc-decantamiento.png" alt="Cara de decantamiento de los discos PA, PB y PC, mostrando el polvo mineral concentrado hacia el centro." />
-            </div>
-            <div>
-              <p class="foto-num" data-anim="fade-up" data-delay="1">06</p>
-              <p class="label muted" style="color:var(--c-lit);font-weight:700;letter-spacing:.08em;margin-bottom:.4rem;" data-anim="fade-in" data-delay="0">ÉXITO PARCIAL</p>
-              <h3 class="h3" data-anim="fade-up" data-delay="2">FDM: el esmalte encapsula mejor que el cemento</h3>
-              <p class="body" data-anim="fade-up" data-delay="3">PA (cemento, 11%): encapsulado parcial. PB (esmalte, 11%): mejor encapsulado, mínimo polvo suelto. PC (mixto, 27%): insuficiente. El decantamiento hacia el centro es más marcado en PA que en PB.</p>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="4">
-                <dt>Condición</dt>
-                <dd>PA 11% · PB 11% · PC 27% · sandwichera 180–200°C</dd>
-              </dl>
-              <dl class="foto-dato" data-anim="fade-in" data-delay="5">
-                <dt>Registro</dt>
-                <dd>Informe Evaluación 3 (Cabezas &amp; López, 2026)</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div class="slide-foot">
-          <span class="label muted">Sistema de testing</span>
-          <span class="label muted">12 / 14</span>
+          <span class="label muted">08 / 11</span>
         </div>
       </section>
 
       <section class="slide dark slide--stats">
         <div class="slide-chrome">
           <span class="label muted" data-anim="fade-in" data-delay="0">Convergencia · baja resolución</span>
-          <span class="label muted" data-anim="fade-in" data-delay="0">13</span>
+          <span class="label muted" data-anim="fade-in" data-delay="0">09</span>
         </div>
         <div class="slide-body">
           <h2 class="h2" data-anim="fade-up" data-delay="1">
@@ -2750,7 +2648,35 @@
         </div>
         <div class="slide-foot">
           <span class="label muted">Sistema de testing</span>
-          <span class="label muted">13 / 14</span>
+          <span class="label muted">09 / 11</span>
+        </div>
+      </section>
+
+      <section class="slide dark slide--ca">
+        <header class="slide-chrome">
+          <span class="label muted">Conclusión · baja resolución</span>
+          <span class="label muted">10</span>
+        </header>
+        <div class="slide-body">
+          <h2 data-anim="fade-up" data-delay="0">Tres certezas que despejamos</h2>
+          <div class="cols-3" data-anim="fade-up" data-delay="1">
+            <div class="caja">
+              <p class="caja-titulo">01 · El símil</p>
+              <p>Usamos cemento como sustituto, con mayor densidad que la lazurita, para acotar el proceso antes de tener lapislázuli real.</p>
+            </div>
+            <div class="caja">
+              <p class="caja-titulo" style="color:var(--c-propio)">02 · SLA curó</p>
+              <p>El curado completo solo se logró al bajar la carga a 7% de esmalte.</p>
+            </div>
+            <div class="caja">
+              <p class="caja-titulo" style="color:var(--c-propio)">03 · FDM homogeneizó</p>
+              <p>Solo la muestra PB (11%, esmalte vitrificable puro, el símil más cercano a la lazurita) logró el mejor encapsulado.</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Sistema de testing</span>
+          <span class="label muted">10 / 11</span>
         </div>
       </section>
 
@@ -2831,6 +2757,9 @@
             void deck.offsetWidth; // force reflow
             deck.style.transition = "";
           } else {
+            deck.classList.remove("is-transitioning");
+            void deck.offsetWidth; // restart the fade keyframe if mid-animation
+            deck.classList.add("is-transitioning");
             deck.style.transform = "translateX(-" + index + "00vw)";
           }
 
@@ -2853,6 +2782,7 @@
             : parseFloat(getComputedStyle(deck).transitionDuration) * 1000;
           setTimeout(function () {
             animating = false;
+            deck.classList.remove("is-transitioning");
           }, delay);
         }
 
