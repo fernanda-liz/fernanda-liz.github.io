@@ -2078,10 +2078,18 @@
       .pr-lista small { display: block; color: var(--c-fg-2); font-size: .86em; }
       .pr-lista li.alta::before { background: var(--c-azul); color: #fff; }
       /* slide 9 */
+      :root { --c-link: #f28a3d; }
+      .pr-linkbox { display: block; text-decoration: none; background: rgba(242,138,61,.07); border: 1px solid var(--c-link); border-left-width: 4px; border-radius: 12px; padding: 1.6vh 1.6vw; margin: .2vh 0 1.4vh; }
+      .pr-linkbox .kk { display: block; font-family: var(--f-mono); font-size: clamp(.62rem,.82vw,.78rem); letter-spacing: .16em; text-transform: uppercase; color: var(--c-fg-2); margin-bottom: .7vh; }
+      .pr-linkbox .kk b { color: var(--c-link); font-weight: 500; }
+      .pr-linkbox .uu { display: block; font-family: var(--f-display); font-weight: 600; font-size: clamp(1.15rem,3.25vw,3.1rem); line-height: 1.12; color: var(--c-link); text-decoration: underline; text-decoration-thickness: .07em; text-underline-offset: .14em; word-break: break-word; }
+      .pr-linkbox .uu .l { display: block; white-space: nowrap; }
+      .pr-linkbox:hover .uu { filter: brightness(1.15); }
+      .pr-refs a { color: var(--c-link); text-decoration: underline; text-underline-offset: .15em; word-break: break-all; }
       .pr-refs { column-count: 2; column-gap: 2.6vw; }
       .pr-refs p { margin: 0 0 1.3vh; break-inside: avoid; font-family: var(--f-body); font-size: clamp(.62rem,.8vw,.78rem); color: var(--c-fg-2); line-height: 1.5; padding-left: 1.6em; text-indent: -1.6em; }
       .pr-refs p em { font-style: italic; color: var(--c-fg); }
-      @media print { .pr-bucle, .pr-ppunto, .pr-punta, .pr-late { opacity: 1 !important; } .pr-escala .lin { transform: none !important; } }
+      @media print { a.pr-linkbox, .pr-refs a { color: var(--c-link) !important; } .pr-bucle, .pr-ppunto, .pr-punta, .pr-late { opacity: 1 !important; } .pr-escala .lin { transform: none !important; } }
     </style>
   </head>
 
@@ -2371,12 +2379,16 @@
         </header>
         <div class="slide-body">
 
-          <h2 data-anim="fade-up" data-delay="0">Referencias</h2>
-          <div class="pr-refs" data-anim="fade-up" data-delay="1">
-            <p>3D Printing Space. (s. f.). <em>LD-002H curing in masked areas</em> [Foro]. https://3dprintingspace.com/t/ld-002h-curing-in-masked-areas/1669</p>
+          <h2 data-anim="fade-up" data-delay="0">Referencias y versión animada</h2>
+          <a class="pr-linkbox" href="https://fernanda-liz.github.io/presentaciones/prototipado-mediana-resolucion-resina/" target="_blank" rel="noopener" data-anim="fade-up" data-delay="1">
+            <span class="kk"><b>Versión animada en línea</b> · desde el PDF, haz clic para abrirla</span>
+            <span class="uu"><span class="l">fernanda-liz.github.io/presentaciones/</span><span class="l">prototipado-mediana-resolucion-resina/</span></span>
+          </a>
+          <div class="pr-refs" data-anim="fade-up" data-delay="2">
+            <p>3D Printing Space. (s. f.). <em>LD-002H curing in masked areas</em> [Foro]. <a href="https://3dprintingspace.com/t/ld-002h-curing-in-masked-areas/1669">https://3dprintingspace.com/t/ld-002h-curing-in-masked-areas/1669</a></p>
             <p>Cabezas, F., &amp; López S., V. (2026). <em>Biocompuesto lapislázuli: Prototipado aplicado y estrategias sostenibles</em> [Informe de Evaluación 3, Inteligencia Material]. Magíster en Ciencias del Diseño, Universidad Adolfo Ibáñez.</p>
-            <p>Core Electronics. (s. f.). <em>Optimal layer exposure time for perfect resin prints</em> [Tutorial]. https://core-electronics.com.au/tutorials/perfect-resin-print-exposure-setting.html</p>
-            <p>Khan, I., Kumar, N., Yadav, J. S., Choudhary, M., Chauhan, A., &amp; Singh, T. (2023). Utilization of waste slate powder in poly(lactic acid) based composite for 3D printer filament. <em>Journal of Materials Research and Technology, 24</em>, 703-714. https://doi.org/10.1016/j.jmrt.2023.03.046</p>
+            <p>Core Electronics. (s. f.). <em>Optimal layer exposure time for perfect resin prints</em> [Tutorial]. <a href="https://core-electronics.com.au/tutorials/perfect-resin-print-exposure-setting.html">https://core-electronics.com.au/tutorials/perfect-resin-print-exposure-setting.html</a></p>
+            <p>Khan, I., Kumar, N., Yadav, J. S., Choudhary, M., Chauhan, A., &amp; Singh, T. (2023). Utilization of waste slate powder in poly(lactic acid) based composite for 3D printer filament. <em>Journal of Materials Research and Technology, 24</em>, 703-714. <a href="https://doi.org/10.1016/j.jmrt.2023.03.046">https://doi.org/10.1016/j.jmrt.2023.03.046</a></p>
             <p>Rosas, J., &amp; Pazols, M. (2026). <em>Prototipado en procesos de diseño</em> [Diapositivas de clase]. Taller de Prototipos, Magíster en Ciencias del Diseño, Universidad Adolfo Ibáñez.</p>
             <p>Vastamäki, T. (2019). <em>Stereolithography ceramic 3D-printing</em> [Tesis de maestría, Tampere University].</p>
             <p>Wensveen, S., &amp; Matthews, B. (2015). Prototypes and prototyping in design research. En P. A. Rodgers &amp; J. Yee (Eds.), <em>The Routledge companion to design research</em> (pp. 262-276). Routledge. (Citado en Rosas y Pazols, 2026.)</p>
