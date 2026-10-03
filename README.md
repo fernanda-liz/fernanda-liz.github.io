@@ -13,6 +13,7 @@ investigación y materiales de trabajo. Todo abierto y documentado.
 |---|---|
 | `/` | Landing: índice de todo lo publicado |
 | `/plantillas/presentaciones/` | Plantilla de presentaciones: 33 layouts, exportable a PDF |
+| `/presentaciones/prototipado-mediana-resolucion-resina/` | Entrega final del Taller de Prototipos: prototipo de mediana resolución sensorial en resina con lapislázuli (9 diapositivas) |
 
 ## Estructura
 

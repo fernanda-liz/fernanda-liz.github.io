@@ -1,0 +1,2605 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resina con lapislázuli chileno · Entrega final Taller de Prototipos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Signal style uses four font families:
+        1. Source Serif 4     — editorial serif for headlines, mixed roman + italic
+        2. DM Sans            — clean grotesque for body, stats numbers
+        3. IBM Plex Mono      — condensed mono labels, chrome, kickers
+        4. Noto Serif SC / Noto Sans SC — Chinese fallbacks for every role
+    -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400;1,8..60,600;1,8..60,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE A · TOKENS  —  SIGNAL STYLE                                    ║
+   ║                                                                      ║
+   ║  Replace this block to change the visual style entirely.             ║
+   ║  Every color, font, and size in this file reads from these vars.     ║
+   ║  Never write raw hex values, font names, or px sizes outside here.   ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+      :root {
+        /* ── Palette ──────────────────────────────────────────────────────── */
+        /* Dark navy: intelligence, authority, depth — the editorial tone */
+        --c-bg: #0a0e1c;
+        /* Slightly lighter navy for secondary dark surfaces */
+        --c-bg-alt: #161d38;
+        /* Warm cream: the light slide background, like aged paper */
+        --c-bg-light: #f2f0ea;
+        /* Slightly cooler cream for secondary light surfaces */
+        --c-bg-light-alt: #e6e2d8;
+
+        /* Primary text on dark: warm off-white, never pure white */
+        --c-fg: #eef0f5;
+        /* Secondary text on dark: muted blue-grey */
+        --c-fg-2: #a7aec4;
+        /* Tertiary / hint text on dark */
+        --c-fg-3: #5b6480;
+        /* Primary text on light: very dark navy near-black */
+        --c-fg-light: #0a0e1c;
+        /* Secondary text on light */
+        --c-fg-light-2: #5a6270;
+        /* Tertiary text on light */
+        --c-fg-light-3: #9aa0a8;
+
+        /* Accent: warm antique gold — the single hot colour; used for italic serif em */
+        --c-accent: #d9b25a;
+        /* Dividers on dark: dark navy border */
+        --c-border: #263156;
+        /* Dividers on light: warm greige border */
+        --c-border-light: #c9c4b6;
+
+        /* ── Typography ──────────────────────────────────────────────────── */
+        /* Display + Heading: Source Serif 4 — editorial, authoritative.
+           Mix roman and italic mid-sentence for the Signal look. */
+        --f-display: "Source Serif 4", "Noto Serif SC", Georgia, serif;
+        --f-heading: "Source Serif 4", "Noto Serif SC", Georgia, serif;
+        /* Body: DM Sans — clean grotesque, steps back so the serif leads */
+        --f-body: "DM Sans", "Noto Sans SC", system-ui, sans-serif;
+        /* Mono: IBM Plex Mono — the condensed editorial timestamp */
+        --f-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
+
+        /* ── Type Scale ───────────────────────────────────────────────────── */
+        /* vw units keep all sizes proportional regardless of window width */
+        --sz-display: 9.5vw; /* hero cover title — very large, commanding */
+        --sz-h1: 5.2vw; /* chapter titles */
+        --sz-h2: 3vw; /* slide headlines */
+        --sz-h3: 1.9vw; /* sub-headlines, compare panel titles */
+        --sz-lead: 1.4vw; /* lead paragraph */
+        --sz-body: 1.05vw; /* body text, bullets */
+        --sz-caption: 0.82vw; /* captions, footnotes */
+        --sz-label: 0.7vw; /* chrome, kickers, tags, mono metadata */
+
+        /* ── Spacing ─────────────────────────────────────────────────────── */
+        --pad-x: 7.5vw; /* horizontal slide padding */
+        --pad-y: 5.5vh; /* vertical slide padding */
+        --gap-lg: 4vh; /* between major content sections */
+        --gap-md: 2.5vh; /* between related elements */
+        --gap-sm: 1.2vh; /* between tightly coupled elements */
+
+        /* ── Motion ──────────────────────────────────────────────────────── */
+        /* Slide pan: sharp in, sharp out — deliberate, not springy */
+        --ease-slide: cubic-bezier(0.77, 0, 0.175, 1);
+        --dur-slide: 0.85s;
+        /* Element entrance: spring-y ease-out for content reveals */
+        --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+        --dur-enter: 0.65s;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE B · ENGINE — DO NOT MODIFY                                     ║
+   ║                                                                      ║
+   ║  Layout engine, transitions, animation system, navigation.           ║
+   ║  Touching this breaks the mechanics.                                 ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--c-bg);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Deck container — all slides sit side by side in one horizontal strip */
+      #deck {
+        display: flex;
+        height: 100vh;
+        transition: transform var(--dur-slide) var(--ease-slide);
+        will-change: transform;
+      }
+
+      /* Slide base — each slide occupies exactly one full viewport */
+      .slide {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        padding: var(--pad-y) var(--pad-x);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+      }
+      .slide-body {
+        min-height: 0;
+      }
+
+      /* Slide themes */
+      .slide.dark {
+        background: var(--c-bg);
+        color: var(--c-fg);
+      }
+      .slide.light {
+        background: var(--c-bg-light);
+        color: var(--c-fg-light);
+      }
+
+      /* ── Animation system ─────────────────────────────────────────────── */
+      /* Elements start invisible; become visible only when slide is active */
+      [data-anim] {
+        opacity: 0;
+      }
+      .slide.is-active [data-anim] {
+        animation-duration: var(--dur-enter);
+        animation-timing-function: var(--ease-enter);
+        animation-fill-mode: forwards;
+      }
+      .slide.is-active [data-anim="fade-up"] {
+        animation-name: kFadeUp;
+      }
+      .slide.is-active [data-anim="fade-in"] {
+        animation-name: kFadeIn;
+      }
+      .slide.is-active [data-anim="reveal-right"] {
+        animation-name: kRevealRight;
+      }
+      .slide.is-active [data-anim="reveal-left"] {
+        animation-name: kRevealLeft;
+      }
+      .slide.is-active [data-anim="scale-in"] {
+        animation-name: kScaleIn;
+      }
+
+      /* Staggered delays via data-delay attribute (0–6) */
+      [data-delay="0"] {
+        animation-delay: 0s;
+      }
+      [data-delay="1"] {
+        animation-delay: 0.08s;
+      }
+      [data-delay="2"] {
+        animation-delay: 0.18s;
+      }
+      [data-delay="3"] {
+        animation-delay: 0.3s;
+      }
+      [data-delay="4"] {
+        animation-delay: 0.44s;
+      }
+      [data-delay="5"] {
+        animation-delay: 0.6s;
+      }
+      [data-delay="6"] {
+        animation-delay: 0.78s;
+      }
+
+      @keyframes kFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes kFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes kRevealRight {
+        from {
+          clip-path: inset(0 100% 0 0);
+          opacity: 1;
+        }
+        to {
+          clip-path: inset(0 0% 0 0);
+          opacity: 1;
+        }
+      }
+      @keyframes kRevealLeft {
+        from {
+          clip-path: inset(0 0 0 100%);
+          opacity: 1;
+        }
+        to {
+          clip-path: inset(0 0 0 0%);
+          opacity: 1;
+        }
+      }
+      @keyframes kScaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.94);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ── Navigation UI ───────────────────────────────────────────────── */
+      #nav-dots {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 7px;
+        z-index: 100;
+      }
+      .nav-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.22);
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        padding: 0;
+      }
+      .nav-dot.is-active {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.4);
+      }
+
+      #slide-counter {
+        position: fixed;
+        bottom: 20px;
+        right: 28px;
+        font-family: var(--f-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.25);
+        z-index: 100;
+        user-select: none;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE C · TYPOGRAPHY                                                 ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      .display {
+        font-family: var(--f-display);
+        font-size: var(--sz-display);
+        font-weight: 700;
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+      }
+      .h1 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h1);
+        font-weight: 600;
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+      }
+      .h2 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h2);
+        font-weight: 600;
+        line-height: 1.18;
+      }
+      .h3 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 500;
+        line-height: 1.3;
+      }
+      .lead {
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        font-weight: 400;
+        line-height: 1.58;
+      }
+      .body {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        font-weight: 400;
+        line-height: 1.65;
+      }
+      .caption {
+        font-family: var(--f-body);
+        font-size: var(--sz-caption);
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      /* Signal signature: italic serif in accent gold for em tags inside headings */
+      .display em,
+      .h1 em,
+      .h2 em,
+      .h3 em {
+        
+        color: var(--c-accent);
+      }
+      .lead em {
+        
+        color: var(--c-accent);
+        font-family: var(--f-heading);
+      }
+
+      .dark .muted {
+        color: var(--c-fg-2);
+      }
+      .light .muted {
+        color: var(--c-fg-light-2);
+      }
+      .accent {
+        color: var(--c-accent);
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE D · CHROME + GRID TEXTURE                                      ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* Subtle grid overlay — the Signal visual fingerprint */
+      .slide.dark::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 80px 80px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .slide.dark > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Chrome (top bar) and footer */
+      .slide-chrome,
+      .slide-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .slide-chrome {
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+        margin-bottom: var(--gap-md);
+      }
+      .slide-foot {
+        padding-top: var(--gap-sm);
+        border-top: 1px solid var(--c-border);
+        margin-top: var(--gap-md);
+      }
+      .light .slide-chrome,
+      .light .slide-foot {
+        border-color: var(--c-border-light);
+      }
+
+      /* Special layouts that don't use chrome/foot */
+      .slide--cover .slide-chrome,
+      .slide--cover .slide-foot,
+      .slide--chapter .slide-chrome,
+      .slide--chapter .slide-foot,
+      .slide--quote .slide-chrome,
+      .slide--quote .slide-foot,
+      .slide--end .slide-chrome,
+      .slide--end .slide-foot {
+        display: none;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE E · LAYOUT PATTERNS                                            ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* 1. COVER ─────────────────────────────────────────────────────────── */
+      .slide--cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: flex-end;
+        gap: var(--gap-md);
+      }
+      .cover-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: var(--gap-lg);
+        padding-top: var(--gap-sm);
+        border-top: 1px solid var(--c-border);
+      }
+      .light .cover-meta {
+        border-color: var(--c-border-light);
+      }
+
+      /* 2. CHAPTER ────────────────────────────────────────────────────────── */
+      .slide--chapter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .chapter-num {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+        margin-bottom: var(--gap-md);
+      }
+      .chapter-rule {
+        width: 36px;
+        height: 1px;
+        background: var(--c-accent);
+        margin-bottom: var(--gap-md);
+      }
+
+      /* 3. STATEMENT ──────────────────────────────────────────────────────── */
+      .slide--statement .statement-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+      }
+
+      /* 4. SPLIT ──────────────────────────────────────────────────────────── */
+      .slide--split .slide-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--pad-x) * 0.7);
+        align-items: center;
+      }
+      .split-text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .split-image {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+      }
+      .split-image img {
+        width: 100%;
+        height: 55vh;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* 5. STATS ───────────────────────────────────────────────────────────── */
+      .slide--stats .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-lg);
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+      .stats-grid.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .stat-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--gap-md) var(--gap-md) var(--gap-md) 0;
+        border-top: 1px solid var(--c-border);
+      }
+      .light .stat-card {
+        border-color: var(--c-border-light);
+      }
+      .stat-value {
+        font-family: var(--f-display);
+        font-size: 5.5vw;
+        font-weight: 600;
+        line-height: 1;
+        color: var(--c-accent);
+        letter-spacing: -0.02em;
+      }
+      .stat-label {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        line-height: 1.5;
+      }
+      .stat-note {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.05em;
+        color: var(--c-fg-3);
+      }
+      .light .stat-note {
+        color: var(--c-fg-light-3);
+      }
+
+      /* 6. QUOTE ───────────────────────────────────────────────────────────── */
+      .slide--quote {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: calc(var(--pad-y) * 1.2) calc(var(--pad-x) * 1.1);
+      }
+      .quote-mark {
+        font-family: var(--f-display);
+        font-size: 8vw;
+        line-height: 0.6;
+        color: var(--c-accent);
+        margin-bottom: var(--gap-md);
+        font-weight: 300;
+      }
+      .quote-text {
+        font-family: var(--f-display);
+        font-size: 3.6vw;
+        font-weight: 400;
+        line-height: 1.28;
+        letter-spacing: -0.01em;
+        max-width: 78%;
+        margin-bottom: var(--gap-lg);
+        
+      }
+      .quote-attr {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4vh;
+      }
+
+      /* 7. LIST ────────────────────────────────────────────────────────────── */
+      .slide--list .slide-body {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: calc(var(--pad-x) * 0.8);
+        align-items: center;
+      }
+      .list-head {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        padding-top: var(--gap-sm);
+      }
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .bullet-list li {
+        display: grid;
+        grid-template-columns: 1.2em 1fr;
+        gap: 0.5em;
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        line-height: 1.5;
+      }
+      .bullet-list li::before {
+        content: "—";
+        color: var(--c-accent);
+        font-family: var(--f-mono);
+      }
+      .dark .bullet-list li {
+        color: var(--c-fg);
+      }
+      .light .bullet-list li {
+        color: var(--c-fg-light);
+      }
+
+      /* 8. COMPARE ─────────────────────────────────────────────────────────── */
+      .slide--compare .slide-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100%;
+      }
+      .compare-panel {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        padding: var(--gap-md) 0;
+      }
+      .compare-panel.left {
+        padding-right: calc(var(--pad-x) * 0.55);
+        border-right: 1px solid var(--c-border);
+      }
+      .compare-panel.right {
+        padding-left: calc(var(--pad-x) * 0.55);
+      }
+      .light .compare-panel.left {
+        border-color: var(--c-border-light);
+      }
+      .compare-label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+      }
+      .compare-label.after {
+        color: var(--c-accent);
+      }
+      .light .compare-label {
+        border-color: var(--c-border-light);
+      }
+
+      /* 9. END ─────────────────────────────────────────────────────────────── */
+      .slide--end {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+      }
+
+      /* 10. EDITORIAL — Editorial newsletter style ─────────────────── */
+      .slide--editorial {
+        grid-template-rows: auto auto auto 1fr auto;
+      }
+      .editorial-stamp {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.22em;
+        color: var(--c-fg-3);
+      }
+      .editorial-stamp .accent {
+        color: var(--c-accent);
+      }
+      .editorial-hl {
+        font-family: var(--f-heading);
+        font-size: 2.75vw;
+        font-weight: 600;
+        line-height: 1.2;
+        padding-bottom: var(--gap-md);
+        border-bottom: 1px solid var(--c-border);
+      }
+      .editorial-hl em {
+        
+        color: var(--c-accent);
+      }
+      .light .editorial-hl {
+        border-color: var(--c-border-light);
+      }
+
+      /* Two-column layout */
+      .editorial-cols {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 0;
+        min-height: 0;
+      }
+      .editorial-col-left {
+        padding-right: calc(var(--pad-x) * 0.38);
+        border-right: 1px solid var(--c-border);
+        display: flex;
+        flex-direction: column;
+      }
+      .editorial-col-right {
+        padding-left: calc(var(--pad-x) * 0.38);
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .light .editorial-col-left {
+        border-color: var(--c-border-light);
+      }
+      .editorial-col-head {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.18em;
+        color: var(--c-fg-3);
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+        margin-bottom: var(--gap-sm);
+      }
+      .light .editorial-col-head {
+        border-color: var(--c-border-light);
+        color: var(--c-fg-light-3);
+      }
+
+      /* Date log in left column */
+      .log-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4vh;
+        flex: 1;
+      }
+      .log-row {
+        display: grid;
+        grid-template-columns: 5em 1fr;
+        gap: 1em;
+        align-items: baseline;
+      }
+      .log-dt {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+        white-space: nowrap;
+      }
+      .log-dd {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        line-height: 1.52;
+      }
+      .log-dd em {
+        
+        color: var(--c-accent);
+        font-family: var(--f-heading);
+      }
+
+      /* 2x2 mixed-font stat grid in right column */
+      .stat-4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .stat-4-cell {
+        border-top: 1px solid var(--c-border);
+        padding: 1.2vh 0 1.5vh 0;
+      }
+      .stat-4-cell:nth-child(even) {
+        border-left: 1px solid var(--c-border);
+        padding-left: 1.8vh;
+      }
+      .light .stat-4-cell {
+        border-color: var(--c-border-light);
+      }
+      /* Value: roman grotesque number (DM Sans 700) + italic serif suffix (Source Serif 4 italic) */
+      .stat-4-val {
+        font-family: var(--f-body);
+        font-size: 2.5vw;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--c-fg);
+        margin-bottom: 0.5vh;
+        letter-spacing: -0.02em;
+      }
+      .stat-4-val em {
+        font-family: var(--f-display);
+        
+        color: var(--c-accent);
+        font-weight: 600;
+      }
+      .stat-4-label {
+        font-family: var(--f-mono);
+        font-size: 0.62vw;
+        letter-spacing: 0.07em;
+        color: var(--c-fg-3);
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+      .light .stat-4-label {
+        color: var(--c-fg-light-3);
+      }
+
+      /* Analysis line below columns */
+      .editorial-analysis {
+        font-family: var(--f-body);
+        font-size: 0.88vw;
+        line-height: 1.72;
+        color: var(--c-fg-2);
+        border-top: 1px solid var(--c-border);
+        padding-top: var(--gap-sm);
+      }
+      .light .editorial-analysis {
+        border-color: var(--c-border-light);
+        color: var(--c-fg-light-2);
+      }
+
+      /* 11. DENSE — Two-column editorial text ─────────────────────────────── */
+      .slide--dense {
+        grid-template-rows: auto auto 1fr auto;
+      }
+      .dense-hl {
+        font-family: var(--f-heading);
+        font-size: 2.4vw;
+        font-weight: 600;
+        line-height: 1.2;
+        padding-bottom: var(--gap-md);
+        border-bottom: 1px solid var(--c-border);
+        max-width: 88%;
+      }
+      .dense-hl em {
+        
+        color: var(--c-accent);
+      }
+      .light .dense-hl {
+        border-color: var(--c-border-light);
+      }
+      .dense-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--pad-x) * 0.45);
+        padding-top: var(--gap-md);
+        min-height: 0;
+      }
+      .dense-col h4 {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.16em;
+        color: var(--c-fg-3);
+        margin-bottom: var(--gap-sm);
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+      }
+      .light .dense-col h4 {
+        border-color: var(--c-border-light);
+        color: var(--c-fg-light-3);
+      }
+      .dense-col p {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        line-height: 1.72;
+        color: var(--c-fg-2);
+        margin-bottom: 1.4vh;
+      }
+      .light .dense-col p {
+        color: var(--c-fg-light-2);
+      }
+      .dense-col p:last-child {
+        margin-bottom: 0;
+      }
+      .dense-col p em {
+        
+        color: var(--c-accent);
+        font-family: var(--f-heading);
+      }
+
+      /* 12. FULLBLEED ──────────────────────────────────────────────────────── */
+      .slide--fullbleed {
+        padding: 0;
+        display: block;
+        position: relative;
+      }
+      .slide--fullbleed::before {
+        display: none !important;
+      }
+      .fb-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .fb-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: var(--pad-y) var(--pad-x);
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(15, 20, 36, 0.9) 35%
+        );
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE F · COMPONENTS                                                 ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* Decorative rule lines */
+      .rule {
+        width: 36px;
+        height: 1px;
+        background: var(--c-accent);
+      }
+      .rule.full {
+        width: 100%;
+        background: var(--c-border);
+      }
+      .light .rule.full {
+        background: var(--c-border-light);
+      }
+
+      /* Kicker label (above headlines) */
+      .kicker {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+      }
+
+      /* Outlined tag */
+      .tag {
+        display: inline-block;
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+        border: 1px solid var(--c-accent);
+        padding: 0.3em 0.8em;
+        line-height: 1;
+      }
+
+      /* Image caption */
+      .img-caption {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.04em;
+        opacity: 0.5;
+        margin-top: 0.8vh;
+      }
+      /* ── CHART ─────────────────────────────────────────────────────────── */
+      .slide--chart .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-shrink: 0;
+      }
+      .chart-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 0;
+      }
+      .bar-track {
+        height: 30vh;
+        display: flex;
+        align-items: flex-end;
+        gap: 4vw;
+        border-left: 1px solid var(--c-border);
+        padding-left: 0.5vw;
+      }
+      .light .bar-track {
+        border-color: var(--c-border-light);
+      }
+      .bar-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: 1vh;
+        height: 100%;
+      }
+      .bar-fill {
+        width: 100%;
+        background: var(--c-fg-3);
+      }
+      .bar-fill.accent {
+        background: var(--c-accent);
+      }
+      .light .bar-fill {
+        background: var(--c-fg-light-3);
+      }
+      .light .bar-fill.accent {
+        background: var(--c-accent);
+      }
+      .bar-x-label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+        white-space: nowrap;
+        text-transform: uppercase;
+      }
+      .light .bar-x-label {
+        color: var(--c-fg-light-3);
+      }
+      .bar-val {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        font-weight: 500;
+        color: var(--c-fg-2);
+      }
+      .bar-val.hi {
+        color: var(--c-accent);
+        font-weight: 600;
+      }
+      .light .bar-val {
+        color: var(--c-fg-light-2);
+      }
+      .chart-baseline {
+        height: 1px;
+        background: var(--c-border);
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .light .chart-baseline {
+        background: var(--c-border-light);
+      }
+      .chart-source {
+        flex-shrink: 0;
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        color: var(--c-fg-3);
+        letter-spacing: 0.06em;
+        margin-top: var(--gap-sm);
+      }
+      .light .chart-source {
+        color: var(--c-fg-light-3);
+      }
+
+      /* ── DIAGRAM ────────────────────────────────────────────────────────── */
+      .slide--diagram .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-lg);
+        min-height: 0;
+      }
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+      .flow-step {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding-right: calc(var(--pad-x) * 0.35);
+      }
+      .flow-num {
+        font-family: var(--f-display);
+        font-size: 4.5vw;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--c-accent);
+        letter-spacing: -0.02em;
+        
+      }
+      .flow-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 600;
+        line-height: 1.15;
+        color: var(--c-fg);
+      }
+      .light .flow-title {
+        color: var(--c-fg-light);
+      }
+      .flow-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.62;
+      }
+      .light .flow-desc {
+        color: var(--c-fg-light-2);
+      }
+      .flow-arrow {
+        display: flex;
+        align-items: flex-start;
+        padding-top: 1em;
+        padding-right: calc(var(--pad-x) * 0.35);
+        font-size: 2vw;
+        color: var(--c-border);
+        flex-shrink: 0;
+      }
+      .light .flow-arrow {
+        color: var(--c-border-light);
+      }
+
+      /* ── PIE / DONUT CHART ──────────────────────────────────────────────── */
+      .slide--pie .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .pie-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--pad-x) * 0.7);
+        align-items: center;
+        flex: 1;
+        min-height: 0;
+      }
+      .pie-donut {
+        width: min(26vw, 42vh);
+        height: min(26vw, 42vh);
+        border-radius: 50%;
+        position: relative;
+        flex-shrink: 0;
+        justify-self: center;
+      }
+      .pie-donut::after {
+        content: "";
+        position: absolute;
+        inset: 22%;
+        border-radius: 50%;
+        background: var(--c-bg);
+      }
+      .pie-legend {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .pie-item {
+        display: grid;
+        grid-template-columns: 0.8em 1fr auto;
+        gap: 1em;
+        align-items: center;
+      }
+      .pie-swatch {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+      .pie-item-label {
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        line-height: 1.4;
+      }
+      .pie-item-val {
+        font-family: var(--f-mono);
+        font-size: var(--sz-body);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: var(--c-accent);
+      }
+      .pie-total {
+        margin-top: var(--gap-sm);
+        padding-top: var(--gap-sm);
+        border-top: 1px solid var(--c-border);
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+      }
+      .light .pie-donut::after {
+        background: var(--c-bg-light);
+      }
+      .light .pie-total {
+        border-color: var(--c-border-light);
+        color: var(--c-fg-light-3);
+      }
+
+      /* ── PYRAMID ─────────────────────────────────────────────────────────── */
+      .slide--pyramid .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .pyramid {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        align-items: center;
+      }
+      .pyr-level {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.3vh 2.5vw;
+        border-left: 3px solid var(--c-accent);
+        transition: width 0.3s;
+      }
+      .pyr-level:nth-child(1) {
+        background: color-mix(in srgb, var(--c-accent) 70%, var(--c-bg));
+        width: 38%;
+      }
+      .pyr-level:nth-child(2) {
+        background: color-mix(in srgb, var(--c-accent) 45%, var(--c-bg));
+        width: 54%;
+      }
+      .pyr-level:nth-child(3) {
+        background: color-mix(in srgb, var(--c-accent) 27%, var(--c-bg));
+        width: 70%;
+      }
+      .pyr-level:nth-child(4) {
+        background: color-mix(in srgb, var(--c-accent) 15%, var(--c-bg));
+        width: 86%;
+      }
+      .pyr-level:nth-child(5) {
+        background: color-mix(in srgb, var(--c-accent) 8%, var(--c-bg));
+        width: 100%;
+      }
+      .pyr-name {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      .pyr-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        text-align: right;
+        max-width: 55%;
+        line-height: 1.4;
+      }
+
+      /* ── VERTICAL TIMELINE ───────────────────────────────────────────────── */
+      .slide--vtimeline {
+        grid-template-rows: auto auto 1fr auto;
+      }
+      .vt-hl {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h2);
+        font-weight: 600;
+        padding-bottom: var(--gap-md);
+        border-bottom: 1px solid var(--c-border);
+      }
+      .light .vt-hl {
+        border-color: var(--c-border-light);
+      }
+      .vtimeline {
+        display: grid;
+        grid-template-columns: 8em 1px 1fr;
+        gap: 0;
+        min-height: 0;
+        padding-top: var(--gap-md);
+      }
+      .vt-date {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.08em;
+        color: var(--c-fg-3);
+        text-align: right;
+        padding: 0 1.5vw 3.5vh 0;
+        line-height: 1.4;
+      }
+      .light .vt-date {
+        color: var(--c-fg-light-3);
+      }
+      .vt-spine {
+        background: var(--c-border);
+        position: relative;
+      }
+      .light .vt-spine {
+        background: var(--c-border-light);
+      }
+      .vt-spine::before {
+        content: "";
+        position: absolute;
+        top: 0.25em;
+        left: -4px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--c-accent);
+      }
+      .vt-content {
+        padding: 0 0 3.5vh 1.5vw;
+      }
+      .vt-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 500;
+        margin-bottom: 0.6vh;
+        line-height: 1.25;
+      }
+      .vt-body {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.65;
+      }
+      .light .vt-body {
+        color: var(--c-fg-light-2);
+      }
+      .vt-body em {
+        
+        color: var(--c-accent);
+        font-family: var(--f-heading);
+      }
+
+      /* ── CYCLE PROCESO ───────────────────────────────────────────────────── */
+      .slide--cycle .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .cycle-grid {
+        display: grid;
+        grid-template-columns: 1fr 3em 1fr;
+        grid-template-rows: 1fr 3em 1fr;
+        gap: var(--gap-sm);
+        flex: 1;
+        min-height: 0;
+        align-items: center;
+      }
+      .cycle-step {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--gap-md);
+        border-top: 2px solid var(--c-accent);
+      }
+      .cycle-num {
+        font-family: var(--f-display);
+        font-size: 3.2vw;
+        font-weight: 700;
+        color: var(--c-accent);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .cycle-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      .cycle-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.6;
+      }
+      .light .cycle-desc {
+        color: var(--c-fg-light-2);
+      }
+      .cycle-arrow {
+        color: var(--c-fg-3);
+        font-size: 1.8vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .light .cycle-arrow {
+        color: var(--c-fg-light-3);
+      }
+      .cycle-corner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--c-fg-3);
+        font-size: 1.3vw;
+      }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         UTILIDADES AÑADIDAS (no vienen en el template original "signal")
+         Exportar a PDF · vista previa 4:3 · notas de orador
+         ═══════════════════════════════════════════════════════════════════ */
+
+      .util-btn {
+        position: fixed;
+        z-index: 60;
+        font-family: var(--f-mono);
+        font-size: 0.7vw;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: rgba(6, 9, 18, 0.78);
+        border: 1px solid var(--c-border);
+        color: var(--c-fg-2);
+        padding: 0.7em 1.3em;
+        border-radius: 2em;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: color 0.2s ease, border-color 0.2s ease;
+      }
+      .util-btn:hover { color: var(--c-accent); border-color: var(--c-accent); }
+      #btn-pdf { left: 2vw; bottom: 2.6vh; }
+
+      .formato-conmutador { position: fixed; top: 2.6vh; right: 2vw; z-index: 60; display: flex; gap: 0.4em; }
+      .formato-btn.activo { color: var(--c-accent); border-color: var(--c-accent); }
+
+      /* Notas de orador: tecla N. Ocultas por defecto y siempre fuera del PDF. */
+      .notas { display: none; }
+      body.con-notas .slide.is-active .notas {
+        display: block;
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        background: #060912;
+        border-top: 1px solid var(--c-border);
+        color: var(--c-fg-2);
+        font-family: var(--f-body);
+        font-size: 0.85vw;
+        line-height: 1.5;
+        padding: 1.4vh 2vw;
+        z-index: 55;
+      }
+      body.con-notas .slide.is-active .notas b { color: var(--c-accent); font-weight: 500; }
+
+      /* Vista previa 4:3: el mismo deck dentro de un iframe a 1024x768 reales
+         (no un zoom aproximado — adentro, cada vw calcula contra esa resolución). */
+      .simulador-4-3 {
+        position: fixed; inset: 0; z-index: 70;
+        background: rgba(6, 9, 18, 0.94);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .simulador-4-3.oculto { display: none; }
+      .simulador-4-3 iframe {
+        width: 1024px; height: 768px; border: none;
+        background: var(--c-bg); transform-origin: center center;
+        box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.6);
+      }
+      #btn-cerrar-simulador { top: 2.6vh; right: 2vw; z-index: 71; }
+
+      /* ── Exportar a PDF ────────────────────────────────────────────────
+         El deck normalmente es UNA tira horizontal de N×100vw movida con
+         translateX. Para imprimir hay que deshacer eso y poner las
+         diapositivas una debajo de otra, cada una en su propia página.
+         El ancho y el transform los pone el JS como estilo inline, así que
+         acá sí hacen falta !important para poder pisarlos.
+         print-color-adjust es obligatorio: sin él Chrome descarta el fondo
+         navy y el deck sale en blanco con el texto claro ilegible. */
+      @media print {
+        @page { size: 1280px 720px; margin: 0; }
+        html, body { overflow: visible !important; height: auto !important; width: auto !important; }
+        #deck {
+          display: block !important;
+          width: auto !important;
+          height: auto !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        .slide {
+          width: 100% !important;
+          height: 100vh !important;
+          flex: none !important;
+          page-break-after: always;
+          break-after: page;
+          overflow: hidden;
+        }
+        .slide:last-child { page-break-after: auto; break-after: auto; }
+        /* las animaciones dejan los elementos en opacity:0 hasta que la
+           diapositiva se activa — al imprimir hay que mostrarlos todos */
+        [data-anim] { opacity: 1 !important; animation: none !important; transform: none !important; }
+        #nav-dots, #slide-counter, .util-btn, .formato-conmutador,
+        .simulador-4-3, .notas { display: none !important; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         LAYOUTS AÑADIDOS · plano cartesiano, flujo, timeline horizontal,
+         líneas, mosaico y foto con leyenda.
+         Todo hereda las variables de :root, así que siguen la marca.
+         ═══════════════════════════════════════════════════════════════════ */
+
+      /* Los SVG de datos comparten estilos de eje y tipografía */
+      .fig { width: 100%; height: auto; max-height: 56vh; display: block; }
+      .fig-eje { stroke: var(--c-border); stroke-width: 1; }
+      .fig-guia { stroke: var(--c-border); stroke-width: 0.5; stroke-dasharray: 3 4; opacity: 0.7; }
+      .fig-tick { fill: var(--c-fg-3); font-family: var(--f-mono); font-size: 11px; }
+      .fig-eje-label { fill: var(--c-fg-2); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+      /* ── 19 · Plano cartesiano de ensayos ─────────────────────────────
+         Réplica del "Plano" de la Bitácora de probetas: cada punto es una
+         probeta; las que aún no tienen ensayo mecánico caen en una banda
+         inferior explícita en vez de dibujarse en cero (ausencia ≠ cero). */
+      .punto-propio { fill: var(--c-accent); }
+      .punto-lit { fill: none; stroke: var(--c-fg-2); stroke-width: 1.5; }
+      .banda-sin-dato { fill: var(--c-bg-alt); opacity: 0.55; }
+      .banda-sin-dato-borde { stroke: var(--c-fg-3); stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+      .banda-label { fill: var(--c-fg-3); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .leyenda-fig { display: flex; gap: 2.2vw; margin-top: 1.4vh; }
+      .leyenda-fig span { display: flex; align-items: center; gap: 0.55em; font-family: var(--f-mono); font-size: var(--sz-caption); color: var(--c-fg-2); }
+      .leyenda-mark { width: 0.62em; height: 0.62em; border-radius: 50%; }
+      .leyenda-mark.propio { background: var(--c-accent); }
+      .leyenda-mark.lit { border: 1.5px solid var(--c-fg-2); }
+      .leyenda-mark.sindato { border: 1px dashed var(--c-fg-3); border-radius: 2px; width: 1.1em; }
+
+      /* ── 20 · Diagrama de flujo con decisión ──────────────────────────── */
+      .flujo-caja rect, .flujo-caja polygon { fill: var(--c-bg-alt); stroke: var(--c-border); stroke-width: 1.2; }
+      .flujo-caja.acento rect, .flujo-caja.acento polygon { stroke: var(--c-accent); }
+      .flujo-t { fill: var(--c-fg); font-family: var(--f-body); font-size: 13px; text-anchor: middle; }
+      .flujo-s { fill: var(--c-fg-2); font-family: var(--f-body); font-size: 11px; text-anchor: middle; }
+      .flujo-linea { stroke: var(--c-fg-3); stroke-width: 1.2; fill: none; }
+      .flujo-rama { fill: var(--c-accent); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; }
+
+      /* ── 21 · Línea de tiempo horizontal ──────────────────────────────── */
+      .lth-eje { stroke: var(--c-border); stroke-width: 2; }
+      .lth-hito circle { fill: var(--c-bg); stroke: var(--c-accent); stroke-width: 2; }
+      .lth-hito.actual circle { fill: var(--c-accent); }
+      .lth-anio { fill: var(--c-accent); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-anchor: middle; }
+      .lth-t { fill: var(--c-fg); font-family: var(--f-display); font-size: 15px; text-anchor: middle; }
+      .lth-s { fill: var(--c-fg-2); font-family: var(--f-body); font-size: 11.5px; text-anchor: middle; }
+
+      /* ── 22 · Gráfico de líneas ───────────────────────────────────────── */
+      .serie-a { fill: none; stroke: var(--c-accent); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+      .serie-b { fill: none; stroke: var(--c-fg-2); stroke-width: 1.8; stroke-dasharray: 5 4; stroke-linejoin: round; }
+      .serie-punto { fill: var(--c-accent); }
+      .serie-area { fill: var(--c-accent); opacity: 0.09; }
+
+      /* ── 23 · Mosaico de fotos ────────────────────────────────────────── */
+      .mosaico {
+        margin-top: 2.4vh;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 0.9vw;
+        height: 52vh;
+      }
+      .mos {
+        background: var(--c-bg-alt);
+        border: 1px solid var(--c-border);
+        position: relative;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .mos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mos-ph { font-family: var(--f-mono); font-size: var(--sz-label); color: var(--c-fg-3); letter-spacing: 0.1em; text-transform: uppercase; }
+      .mos-cap {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(transparent, rgba(6, 9, 18, 0.92));
+        color: var(--c-fg); font-family: var(--f-mono); font-size: var(--sz-label);
+        letter-spacing: 0.06em; padding: 1.6em 0.9em 0.7em;
+      }
+      .mos-grande { grid-column: span 2; grid-row: span 2; }
+      .mos-ancha { grid-column: span 2; }
+
+      /* ── 24 · Foto con leyenda destacada ──────────────────────────────── */
+      .foto-leyenda { display: grid; grid-template-columns: 1.55fr 1fr; gap: 2.6vw; align-items: center; height: 100%; }
+      .foto-marco { background: var(--c-bg-alt); border: 1px solid var(--c-border); height: 54vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .foto-marco img { width: 100%; height: 100%; object-fit: cover; }
+      .foto-num { font-family: var(--f-display); font-size: 3.4vw; color: var(--c-accent); line-height: 1; margin: 0 0 1.2vh; }
+      .slide--photo .h3 { margin-bottom: 1.4vh; }
+      .slide--photo .body { color: var(--c-fg-2); }
+      .foto-dato { border-top: 1px solid var(--c-border); padding-top: 1.1vh; margin-top: 2vh; }
+      .foto-dato dt { font-family: var(--f-mono); font-size: var(--sz-label); color: var(--c-fg-3); letter-spacing: 0.08em; text-transform: uppercase; }
+      .foto-dato dd { margin: 0.2em 0 0; font-family: var(--f-body); font-size: var(--sz-body); color: var(--c-fg); }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         LAYOUTS PORTADOS del deck de Computación Avanzada.
+         Todo va acotado bajo .slide--ca para no afectar a las otras
+         diapositivas. Los colores se remapean a las variables de esta
+         plantilla, así que siguen la marca aunque cambies :root.
+         ═══════════════════════════════════════════════════════════════════ */
+      :root {
+        --c-panel: #10152a;      /* panel de las tarjetas del deck original */
+        --c-azul: #6478c2;       /* azul de marca: flechas, bordes, enlaces */
+        --c-propio: #92b39c;     /* verde: medición propia */
+        --c-lit: #c98a6b;        /* terracota: dato de literatura */
+        --c-fallida: #c9695f;    /* rojo: prueba fallida / decisión de no hacer */
+      }
+
+      .slide--ca .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 0;
+      }
+      .slide--ca h1 {
+        margin: 0;
+        font-family: var(--f-display);
+        font-size: clamp(2.6rem, 6.6vw, 5.2rem);
+        font-weight: 500; letter-spacing: -0.02em; line-height: 1.02;
+        color: var(--c-accent); position: relative;
+      }
+      .slide--ca h2 {
+        margin: 0 0 1.6rem;
+        font-family: var(--f-display);
+        font-size: clamp(1.5rem, 3.1vw, 2.6rem);
+        font-weight: 500; letter-spacing: -0.015em; line-height: 1.15;
+        color: var(--c-accent); max-width: 24ch;
+      }
+      .slide--ca p, .slide--ca li, .slide--ca span { font-family: var(--f-body); }
+      .slide--ca .num-seccion {
+        margin: 0 0 0.9rem; font-size: clamp(0.82rem, 1.05vw, 0.95rem);
+        letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--c-azul); font-weight: 600;
+      }
+      .slide--ca .eyebrow {
+        margin: 0 0 2rem; font-family: var(--f-mono);
+        font-size: clamp(0.72rem, 1.15vw, 1rem);
+        letter-spacing: 0.22em; color: var(--c-accent);
+      }
+      .slide--ca .bajada {
+        margin: 1.3rem 0 0; font-size: clamp(0.95rem, 1.75vw, 1.45rem);
+        color: var(--c-fg); font-weight: 300; line-height: 1.4; max-width: 46ch;
+      }
+      .slide--ca .portada-pie { margin-top: auto; padding-top: 2.5rem; }
+      .slide--ca .autoras { margin: 0; font-size: clamp(1rem, 1.4vw, 1.2rem); color: var(--c-fg); }
+      .slide--ca .contexto { margin: 0.3rem 0 0; font-size: clamp(0.9rem, 1.15vw, 1.05rem); color: var(--c-fg-2); }
+      .slide--ca .pie-slide {
+        margin: 1.6rem 0 0; font-size: clamp(0.88rem, 1.1vw, 1.02rem);
+        color: var(--c-fg-2); border-top: 1px solid var(--c-border); padding-top: 0.9rem;
+      }
+      .slide--ca .rojo { color: var(--c-fallida); }
+      .slide--ca strong { color: var(--c-fg); font-weight: 600; }
+
+      /* portada con fotografía a sangre */
+      .slide--ca-portada { position: relative; }
+      .slide--ca-portada::after {
+        content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        background-image:
+          linear-gradient(90deg,
+            rgba(10, 14, 28, 0.94) 0%, rgba(10, 14, 28, 0.78) 32%,
+            rgba(10, 14, 28, 0.32) 58%, rgba(10, 14, 28, 0.05) 78%),
+          url("img/lapislazuli-portada.jpg");
+        background-size: cover, cover;
+        background-position: center, center right;
+      }
+      .slide--ca-portada > * { position: relative; z-index: 1; }
+
+      /* cajas y columnas */
+      .slide--ca .cols-3, .slide--ca .cols-2 { display: grid; gap: 1.1rem; }
+      .slide--ca .cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .slide--ca .cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .slide--ca .caja {
+        background: var(--c-panel); border: 1px solid var(--c-border);
+        border-left: 3px solid var(--c-azul); border-radius: 10px; padding: 1.1rem 1.2rem;
+      }
+      .slide--ca .caja-meta { border-left-color: var(--c-accent); }
+      .slide--ca .caja-no { border-left-color: var(--c-fallida); }
+      .slide--ca .caja-titulo {
+        margin: 0 0 0.5rem; color: var(--c-accent);
+        font-size: clamp(0.9rem, 1.15vw, 1.05rem); font-weight: 700; letter-spacing: 0.04em;
+      }
+      .slide--ca .caja p { font-size: clamp(0.84rem, 1.02vw, 0.96rem); color: var(--c-fg-2); line-height: 1.5; }
+      .slide--ca .pregunta-grande {
+        font-size: clamp(1.1rem, 1.6vw, 1.38rem); color: var(--c-fg) !important;
+        line-height: 1.35; margin-bottom: 0.8rem;
+      }
+      .slide--ca .preguntas .caja { padding: 1.4rem 1.5rem; }
+
+      /* grilla de referencias */
+      .slide--ca .ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
+      .slide--ca .ref {
+        background: var(--c-panel); border: 1px solid var(--c-border);
+        border-top: 3px solid var(--c-lit); border-radius: 10px; padding: 1rem 1.1rem;
+      }
+      .slide--ca .ref.propia { border-top-color: var(--c-propio); }
+      .slide--ca .ref-fuente { margin: 0; font-size: clamp(0.82rem, 1vw, 0.92rem); color: var(--c-fg-2); }
+      .slide--ca .ref-dato {
+        margin: 0.35rem 0 0.5rem; font-family: var(--f-display);
+        font-size: clamp(1.25rem, 2.2vw, 1.85rem); font-weight: 300;
+        color: var(--c-accent); line-height: 1;
+      }
+      .slide--ca .ref-detalle { margin: 0; font-size: clamp(0.84rem, 1.02vw, 0.94rem); line-height: 1.45; color: var(--c-fg-2); }
+
+      /* reglas con bloques de código */
+      .slide--ca .split-codigo { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+      .slide--ca .split-codigo-4 { gap: 0.75rem 1.2rem; }
+      /* la diapositiva de 4 reglas con código es la más densa del deck:
+         título más contenido y cajas más compactas para que la fila de
+         abajo no toque el pie de página */
+      .slide--ca:has(.split-codigo-4) h2 { font-size: clamp(1.3rem, 2.5vw, 2.1rem); margin-bottom: 1.1rem; }
+      .slide--ca .split-codigo-4 .regla-bloque { padding: 0.72rem 0.9rem; }
+      .slide--ca .split-codigo-4 pre { margin-top: 0.5rem; padding: 0.5rem 0.65rem; }
+      .slide--ca .regla-bloque {
+        background: var(--c-panel); border: 1px solid var(--c-border);
+        border-radius: 10px; padding: 0.9rem 1.05rem;
+      }
+      .slide--ca .regla-num {
+        margin: 0 0 0.55rem; color: var(--c-accent); font-weight: 700;
+        font-size: clamp(0.82rem, 1.05vw, 0.95rem);
+      }
+      .slide--ca .regla-io { margin: 0 0 0.3rem; font-size: clamp(0.72rem, 0.92vw, 0.84rem); color: var(--c-fg); }
+      .slide--ca .regla-io span {
+        display: inline-block; min-width: 52px; color: var(--c-azul);
+        font-family: var(--f-mono); font-size: 0.8em; letter-spacing: 0.12em;
+        text-transform: uppercase; font-weight: 700;
+      }
+      .slide--ca .regla-bloque p:not(.regla-io):not(.regla-num) {
+        margin-top: 0.55rem; font-size: clamp(0.74rem, 0.94vw, 0.86rem); color: var(--c-fg-2);
+      }
+      .slide--ca pre {
+        margin-top: 0.6rem; padding: 0.6rem 0.75rem; background: var(--c-bg);
+        border: 1px solid var(--c-border); border-radius: 6px; overflow-x: auto;
+      }
+      .slide--ca code {
+        font-family: var(--f-mono); font-size: clamp(0.66rem, 0.82vw, 0.76rem);
+        line-height: 1.5; color: var(--c-fg-2);
+      }
+
+      /* guion de demo */
+      .slide--ca .url-demo {
+        display: inline-block; margin-bottom: 1.8rem; font-family: var(--f-mono);
+        font-size: clamp(1rem, 1.7vw, 1.4rem); color: var(--c-azul);
+        text-decoration: none; border-bottom: 1px solid var(--c-azul); padding-bottom: 0.2rem;
+      }
+      .slide--ca .guion { margin: 0; padding-left: 1.4rem; max-width: 70ch; }
+      .slide--ca .guion li {
+        margin-bottom: 1rem; color: var(--c-fg-2);
+        font-size: clamp(1rem, 1.38vw, 1.22rem); padding-left: 0.3rem;
+      }
+      .slide--ca .guion li::marker { color: var(--c-accent); font-weight: 700; }
+      .slide--ca .siguientes { margin-top: 2.2rem; border-top: 1px solid var(--c-border); padding-top: 1.1rem; }
+      .slide--ca .siguientes-cap {
+        margin: 0 0 0.8rem; font-family: var(--f-mono);
+        font-size: clamp(0.72rem, 0.92vw, 0.85rem); letter-spacing: 0.18em;
+        color: var(--c-accent); font-weight: 700;
+      }
+      .slide--ca .siguientes-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+      .slide--ca .siguientes-items span {
+        background: var(--c-panel); border: 1px solid var(--c-border);
+        border-left: 3px solid var(--c-azul); border-radius: 8px; padding: 0.7rem 0.9rem;
+        font-size: clamp(0.82rem, 1vw, 0.95rem); color: var(--c-fg-2);
+      }
+
+      /* columnas de herramientas */
+      .slide--ca .taller { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+      .slide--ca .taller-cap {
+        margin: 0 0 0.7rem; font-family: var(--f-mono);
+        font-size: clamp(0.8rem, 1vw, 0.92rem); letter-spacing: 0.18em;
+        color: var(--c-accent); font-weight: 700;
+        border-bottom: 1px solid var(--c-border); padding-bottom: 0.5rem;
+      }
+      .slide--ca .herr {
+        background: var(--c-panel); border: 1px solid var(--c-border);
+        border-radius: 8px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem;
+      }
+      .slide--ca .herr-n {
+        display: block; color: var(--c-fg); font-size: clamp(0.9rem, 1.12vw, 1.04rem);
+        font-weight: 600; margin-bottom: 0.25rem;
+      }
+      .slide--ca .herr-d {
+        display: block; color: var(--c-fg-2); font-size: clamp(0.82rem, 1vw, 0.93rem); line-height: 1.45;
+      }
+
+      /* diagramas SVG del deck original */
+      .slide--ca .diagrama { width: 100%; height: auto; max-height: 44vh; }
+      .slide--ca .d-caja rect { fill: var(--c-panel); stroke: var(--c-border); stroke-width: 1; }
+      .slide--ca .d-reglas rect { fill: rgba(217, 178, 90, 0.07); stroke: var(--c-accent); }
+      .slide--ca .d-estado rect { fill: rgba(100, 120, 194, 0.11); stroke: var(--c-azul); }
+      .slide--ca .d-out rect { fill: var(--c-bg-alt); }
+      .slide--ca .d-t { fill: var(--c-fg); font-family: var(--f-body); font-size: 16px; text-anchor: middle; }
+      .slide--ca .d-s { fill: var(--c-fg-2); font-family: var(--f-body); font-size: 13px; text-anchor: middle; }
+      .slide--ca .d-cap {
+        fill: var(--c-accent); font-family: var(--f-mono); font-size: 12.5px;
+        letter-spacing: 0.14em; text-anchor: middle;
+      }
+      .slide--ca .d-flecha { stroke: var(--c-azul); stroke-width: 1.6; }
+      .slide--ca .d-conector { fill: none; stroke: var(--c-azul); stroke-width: 1.6; }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         MOVIMIENTO POR ELEMENTO
+         Todo cuelga de .slide.is-active, así que se dispara al entrar la
+         diapositiva y se reinicia al volver a ella. Se aplica por selector
+         para no tener que marcar cada elemento en el HTML.
+         ═══════════════════════════════════════════════════════════════════ */
+
+      @keyframes mSubir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      @keyframes mAparecer { from { opacity: 0; } to { opacity: 1; } }
+      /* variantes para elementos cuya opacidad final NO es 1: si se animaran
+         con mAparecer terminarían opacos y matarían la jerarquía visual
+         (el área bajo la curva es un velo, no un relleno). */
+      @keyframes mVelo { from { opacity: 0; } to { opacity: 0.09; } }
+      @keyframes mGuia { from { opacity: 0; } to { opacity: 0.7; } }
+      @keyframes mEscala { from { opacity: 0; transform: scale(0.82); } to { opacity: 1; transform: none; } }
+      @keyframes mCrecerAlto { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+      @keyframes mCrecerAncho { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      @keyframes mDibujar { to { stroke-dashoffset: 0; } }
+      /* pulso muy leve, solo para el elemento de acento de una figura */
+      @keyframes mPulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+
+      /* ── 1 · Hijos de contenedores: entran en cascada ─────────────────── */
+      .slide .ref-grid > *, .slide .cols-2 > *, .slide .cols-3 > *,
+      .slide .split-codigo > *, .slide .taller > *, .slide .siguientes-items > *,
+      .slide .mosaico > *, .slide .guion li, .slide .pie-row,
+      .slide .pyr-level, .slide .vt-item, .slide .stat-card,
+      .slide .leyenda-fig > * {
+        opacity: 0;
+      }
+      .slide.is-active .ref-grid > *, .slide.is-active .cols-2 > *,
+      .slide.is-active .cols-3 > *, .slide.is-active .split-codigo > *,
+      .slide.is-active .taller > *, .slide.is-active .siguientes-items > *,
+      .slide.is-active .mosaico > *, .slide.is-active .guion li,
+      .slide.is-active .pie-row, .slide.is-active .pyr-level,
+      .slide.is-active .vt-item, .slide.is-active .stat-card,
+      .slide.is-active .leyenda-fig > * {
+        animation: mSubir 620ms var(--ease-enter, cubic-bezier(0.22, 0.8, 0.28, 1)) both;
+      }
+      /* el escalonado sale del orden del elemento, sin marcarlo en el HTML */
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(1) { animation-delay: 0.26s; }
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(2) { animation-delay: 0.36s; }
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(3) { animation-delay: 0.46s; }
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(4) { animation-delay: 0.56s; }
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(5) { animation-delay: 0.66s; }
+      .slide.is-active :is(.ref-grid, .cols-2, .cols-3, .split-codigo, .taller,
+        .siguientes-items, .mosaico, .guion, .pie-legend, .pyramid, .leyenda-fig) > *:nth-child(n + 6) { animation-delay: 0.76s; }
+
+      /* las fichas de herramienta entran después de su columna */
+      .slide .taller .herr { opacity: 0; }
+      .slide.is-active .taller .herr { animation: mSubir 560ms var(--ease-enter) both; }
+      .slide.is-active .taller .herr:nth-child(2) { animation-delay: 0.62s; }
+      .slide.is-active .taller .herr:nth-child(3) { animation-delay: 0.74s; }
+
+      /* ── 2 · Barras: crecen desde la base ─────────────────────────────── */
+      .slide .bar-fill { transform-origin: bottom center; transform: scaleY(0); }
+      .slide.is-active .bar-fill { animation: mCrecerAlto 760ms var(--ease-enter) both; }
+      .slide.is-active .bar-col:nth-child(1) .bar-fill { animation-delay: 0.30s; }
+      .slide.is-active .bar-col:nth-child(2) .bar-fill { animation-delay: 0.42s; }
+      .slide.is-active .bar-col:nth-child(3) .bar-fill { animation-delay: 0.54s; }
+      .slide.is-active .bar-col:nth-child(4) .bar-fill { animation-delay: 0.66s; }
+      .slide.is-active .bar-col:nth-child(5) .bar-fill { animation-delay: 0.78s; }
+      .slide .bar-val, .slide .bar-x-label { opacity: 0; }
+      .slide.is-active .bar-val { animation: mAparecer 500ms ease both; animation-delay: 0.9s; }
+      .slide.is-active .bar-x-label { animation: mAparecer 500ms ease both; animation-delay: 0.5s; }
+      .slide .chart-baseline { transform-origin: left center; transform: scaleX(0); }
+      .slide.is-active .chart-baseline { animation: mCrecerAncho 700ms var(--ease-enter) both; animation-delay: 0.2s; }
+
+      /* ── 3 · Dona: el arco se dibuja ──────────────────────────────────── */
+      .slide .pie-donut circle + circle, .slide .dona-valor { stroke-dasharray: 100; }
+      .slide.is-active .pie-donut { animation: mEscala 700ms var(--ease-enter) both; animation-delay: 0.25s; }
+
+      /* ── 4 · Espina de la línea de tiempo vertical ────────────────────── */
+      .slide .vt-spine { transform-origin: top center; transform: scaleY(0); }
+      .slide.is-active .vt-spine { animation: mCrecerAlto 900ms var(--ease-enter) both; animation-delay: 0.25s; }
+
+      /* ── 5 · SVG: cajas, flechas y puntos ─────────────────────────────── */
+      /* cajas de los diagramas portados */
+      .slide .d-caja, .slide .flujo-caja, .slide .lth-hito { opacity: 0; }
+      .slide.is-active .d-caja, .slide.is-active .flujo-caja,
+      .slide.is-active .lth-hito { animation: mSubir 560ms var(--ease-enter) both; }
+      .slide.is-active .d-caja:nth-of-type(1), .slide.is-active .flujo-caja:nth-of-type(1) { animation-delay: 0.30s; }
+      .slide.is-active .d-caja:nth-of-type(2), .slide.is-active .flujo-caja:nth-of-type(2) { animation-delay: 0.42s; }
+      .slide.is-active .d-caja:nth-of-type(3), .slide.is-active .flujo-caja:nth-of-type(3) { animation-delay: 0.54s; }
+      .slide.is-active .d-caja:nth-of-type(4), .slide.is-active .flujo-caja:nth-of-type(4) { animation-delay: 0.66s; }
+      .slide.is-active .d-caja:nth-of-type(n + 5) { animation-delay: 0.78s; }
+      .slide .d-cap { opacity: 0; }
+      .slide.is-active .d-cap { animation: mAparecer 520ms ease both; animation-delay: 0.22s; }
+
+      /* flechas y conectores: se dibujan.
+         dasharray 200 cubre de sobra cualquier tramo de estos diagramas, así
+         que sirve como "largo normalizado" sin tener que medir cada línea. */
+      /* 2000 y no 200: el trazo más largo de estos diagramas mide 1227
+         (la vuelta de "siguiente iteración"). Si el dasharray es menor que
+         el trazo, el patrón se repite y la línea sale cortada en trozos,
+         con la punta de flecha separada del final visible. */
+      .slide .d-flecha, .slide .d-conector, .slide .flujo-linea {
+        stroke-dasharray: 2000; stroke-dashoffset: 2000;
+      }
+      .slide.is-active .d-flecha, .slide.is-active .d-conector,
+      .slide.is-active .flujo-linea {
+        animation: mDibujar 900ms ease-out both; animation-delay: 0.62s;
+      }
+      .slide.is-active .d-conector { animation-duration: 1200ms; animation-delay: 0.95s; }
+
+      /* puntos del plano cartesiano: aparecen uno a uno */
+      .slide .punto-propio, .slide .punto-lit { opacity: 0; transform-origin: center; transform-box: fill-box; }
+      .slide.is-active .punto-propio, .slide.is-active .punto-lit {
+        animation: mEscala 520ms var(--ease-enter) both;
+      }
+      .slide.is-active .punto-lit:nth-of-type(1) { animation-delay: 0.40s; }
+      .slide.is-active .punto-lit:nth-of-type(2) { animation-delay: 0.50s; }
+      .slide.is-active .punto-lit:nth-of-type(3) { animation-delay: 0.60s; }
+      .slide.is-active .punto-lit:nth-of-type(4) { animation-delay: 0.70s; }
+      .slide.is-active .punto-propio:nth-of-type(1) { animation-delay: 0.80s; }
+      .slide.is-active .punto-propio:nth-of-type(2) { animation-delay: 0.92s; }
+      .slide.is-active .punto-propio:nth-of-type(3) { animation-delay: 1.00s; }
+      .slide.is-active .punto-propio:nth-of-type(4) { animation-delay: 1.08s; }
+      /* la banda "sin ensayo" se despliega a lo ancho */
+      .slide .banda-sin-dato, .slide .banda-sin-dato-borde { transform-origin: left center; transform: scaleX(0); }
+      .slide.is-active .banda-sin-dato, .slide.is-active .banda-sin-dato-borde {
+        animation: mCrecerAncho 800ms var(--ease-enter) both; animation-delay: 0.55s;
+      }
+      .slide .banda-label { opacity: 0; }
+      .slide.is-active .banda-label { animation: mAparecer 500ms ease both; animation-delay: 1.15s; }
+
+      /* series del gráfico de líneas: se dibujan y luego aparecen los puntos */
+      .slide .serie-a, .slide .serie-b { stroke-dasharray: 1400; stroke-dashoffset: 1400; }
+      .slide.is-active .serie-a { animation: mDibujar 1500ms ease-out both; animation-delay: 0.35s; }
+      .slide.is-active .serie-b { animation: mDibujar 1500ms ease-out both; animation-delay: 0.55s; }
+      .slide .serie-area { opacity: 0; }
+      .slide.is-active .serie-area { animation: mVelo 900ms ease both; animation-delay: 1.1s; }
+      .slide .serie-punto { opacity: 0; }
+      .slide.is-active .serie-punto { animation: mEscala 420ms var(--ease-enter) both; animation-delay: 1.25s; }
+
+      /* red de nodos y ejes de las figuras propias */
+      .slide .fig-eje, .slide .lth-eje { stroke-dasharray: 1200; stroke-dashoffset: 1200; }
+      .slide.is-active .fig-eje, .slide.is-active .lth-eje {
+        animation: mDibujar 1000ms ease-out both; animation-delay: 0.2s;
+      }
+      .slide .fig-guia { opacity: 0; }
+      .slide.is-active .fig-guia { animation: mGuia 700ms ease both; animation-delay: 0.45s; }
+
+      /* ── 6 · Pulso continuo, solo donde marca la idea central ─────────── */
+      .slide.is-active .lth-hito.actual circle,
+      .slide.is-active .bar-fill.accent {
+        transform-origin: center;
+      }
+      .slide.is-active .lth-hito.actual circle {
+        animation: mSubir 560ms var(--ease-enter) both,
+                   mPulso 3s ease-in-out 1.2s infinite;
+        transform-box: fill-box;
+      }
+
+      /* ── 7 · Respeto por quien pide menos movimiento ──────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        .slide *, .slide.is-active * {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+          stroke-dashoffset: 0 !important;
+        }
+        .slide .serie-area, .slide.is-active .serie-area { opacity: 0.09 !important; }
+        .slide .fig-guia, .slide.is-active .fig-guia { opacity: 0.7 !important; }
+        .slide .banda-sin-dato, .slide.is-active .banda-sin-dato { opacity: 0.55 !important; }
+      }
+
+      /* ── 8 · En el PDF todo tiene que estar quieto y visible ──────────── */
+      @media print {
+        .slide *, .slide.is-active * {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+          stroke-dashoffset: 0 !important;
+        }
+        /* excepciones: estos dos son velo y guía, no elementos sólidos */
+        .slide .serie-area, .slide.is-active .serie-area { opacity: 0.09 !important; }
+        .slide .fig-guia, .slide.is-active .fig-guia { opacity: 0.7 !important; }
+        .slide .banda-sin-dato, .slide.is-active .banda-sin-dato { opacity: 0.55 !important; }
+      }
+
+      /* ═════════════════════════════════════════════════════
+         PRESENTACIÓN · ENTREGA FINAL · Prototipado de mediana resolución
+         Todo acotado bajo .slide--pr. Hereda las variables de :root.
+         ═════════════════════════════════════════════════════ */
+      .slide--pr .slide-body { display: flex; flex-direction: column; justify-content: flex-start; min-height: 0; gap: 1.4vh; }
+      .slide--pr h2 { margin: 0; max-width: none; font-size: clamp(1.4rem, 2.7vw, 2.4rem); line-height: 1.12; }
+      .slide--pr .sub { margin: 0; font-family: var(--f-body); font-size: clamp(.85rem,1.25vw,1.1rem); color: var(--c-fg-2); max-width: 70ch; }
+      .pr-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4vw; min-height: 0; }
+      .pr-fig { margin: 0; display: flex; flex-direction: column; gap: .8vh; min-height: 0; }
+      .pr-fig img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; border: 1px solid var(--c-border); display: block; }
+      .pr-fig.wide img { aspect-ratio: 4/3; }
+      .pr-fig figcaption { font-family: var(--f-body); font-size: clamp(.72rem,.95vw,.9rem); color: var(--c-fg-2); line-height: 1.35; }
+      .pr-fig figcaption b { color: var(--c-fg); font-weight: 600; display: block; font-size: clamp(.8rem,1.1vw,1rem); }
+      .pr-chip { font-family: var(--f-mono); font-size: clamp(.6rem,.78vw,.74rem); letter-spacing: .08em; text-transform: uppercase; color: var(--c-fg-2); border: 1px solid var(--c-border); border-radius: 2em; padding: .5em 1.1em; background: var(--c-panel); }
+      .pr-chip b { color: var(--c-accent); font-weight: 500; }
+      .pr-chips { display: flex; flex-wrap: wrap; gap: .7vw; }
+      .pr-box { background: var(--c-panel); border: 1px solid var(--c-border); border-left: 3px solid var(--c-azul); border-radius: 10px; padding: 1.2vh 1.1vw; }
+      .pr-box.oro { border-left-color: var(--c-accent); }
+      .pr-box.rojo { border-left-color: var(--c-fallida); }
+      .pr-box .t { font-family: var(--f-mono); font-size: clamp(.6rem,.78vw,.74rem); letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent); margin: 0 0 .5vh; }
+      .pr-box p, .pr-box li { font-family: var(--f-body); font-size: clamp(.78rem,1.05vw,.98rem); color: var(--c-fg); line-height: 1.45; margin: 0; }
+      .pr-box ul { margin: 0; padding-left: 1.1em; }
+      .pr-box li::marker { color: var(--c-accent); }
+      .pr-cap { font-family: var(--f-body); font-size: clamp(.68rem,.88vw,.82rem); color: var(--c-fg-3); margin: 0; line-height: 1.4; }
+      /* slide 2: progresión */
+      .pr-prog { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.6vw; min-height: 0; align-items: stretch; }
+      .pr-card { position: relative; background: var(--c-panel); border: 1px solid var(--c-border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+      .pr-card .ph { height: 21vh; width: 100%; object-fit: cover; display: block; border-bottom: 1px solid var(--c-border); }
+      .pr-card .ph.vacia { display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, rgba(100,120,194,.08) 0 10px, transparent 10px 20px); color: var(--c-fg-3); font-family: var(--f-mono); font-size: clamp(.65rem,.85vw,.8rem); letter-spacing: .16em; text-transform: uppercase; }
+      .pr-card .cu { padding: 1.4vh 1.2vw 1.6vh; display: flex; flex-direction: column; gap: .7vh; }
+      .pr-card .tag { font-family: var(--f-mono); font-size: clamp(.58rem,.74vw,.7rem); letter-spacing: .16em; text-transform: uppercase; color: var(--c-azul); margin: 0; }
+      .pr-card h3 { margin: 0; font-family: var(--f-heading); font-weight: 600; font-size: clamp(1rem,1.55vw,1.4rem); color: var(--c-fg); line-height: 1.2; }
+      .pr-card p.tx { margin: 0; font-family: var(--f-body); font-size: clamp(.78rem,1.02vw,.95rem); color: var(--c-fg-2); line-height: 1.45; }
+      .pr-card.aqui { border-color: var(--c-accent); box-shadow: 0 0 0 1px var(--c-accent) inset; }
+      .pr-card.aqui .tag { color: var(--c-accent); }
+      .pr-aqui { position: absolute; top: 1.2vh; right: 1vw; background: var(--c-accent); color: #0a0e1c; font-family: var(--f-mono); font-size: clamp(.58rem,.74vw,.7rem); letter-spacing: .14em; padding: .4em 1em; border-radius: 2em; font-weight: 600; }
+      .slide.is-active .pr-aqui { animation: prLatido 2.4s ease-in-out 1.2s infinite; }
+      @keyframes prLatido { 0%,100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+      .pr-card.proxima { border-style: dashed; }
+      /* slide 3: flujo */
+      .pr-flujo { width: 100%; height: auto; max-height: 37vh; display: block; }
+      .pr-flujo .flujo-t { font-size: 15px; font-weight: 600; }
+      .pr-flujo .flujo-s { font-size: 11.5px; }
+      .pr-flujo .flujo-rama { font-size: 12px; }
+      .pr-late { opacity: 0; }
+      .slide.is-active .pr-late { animation: kFadeIn 500ms ease var(--d, 0s) both; }
+      .pr-punta { fill: var(--c-azul); opacity: 0; }
+      .slide.is-active .pr-punta { animation: kFadeIn 400ms ease both; }
+      .pr-flujo .flujo-linea { stroke: var(--c-azul); stroke-width: 1.8; }
+      .pr-bucle { fill: none; stroke: var(--c-accent); stroke-width: 1.8; stroke-dasharray: 7 7; opacity: 0; }
+      .slide.is-active .pr-bucle { animation: kFadeIn 500ms ease both, prFluir 1.4s linear infinite; }
+      @keyframes prFluir { to { stroke-dashoffset: -28; } }
+      .pr-ppunto { fill: var(--c-accent); opacity: 0; }
+      .slide.is-active .pr-ppunto { animation: kFadeIn 400ms ease 4.4s both; }
+      .pr-fila { display: grid; grid-template-columns: 0.8fr 0.8fr 0.8fr 1.6fr; gap: 1.2vw; align-items: end; min-height: 0; }
+      .pr-fila .pr-fig img { aspect-ratio: auto; height: 12.5vh; }
+      .pr-fila .pr-fig figcaption { font-size: clamp(.64rem,.82vw,.8rem); }
+      /* slide 4 */
+      .pr-escala { display: flex; align-items: center; gap: 1.2vw; }
+      .pr-escala .lin { flex: 1; height: 4px; border-radius: 3px; background: linear-gradient(90deg, #c9d3e6, var(--c-azul) 55%, #0b1230); transform-origin: left center; }
+      .slide.is-active .pr-escala .lin { animation: mCrecerAncho 1100ms var(--ease-enter) 0.9s both; }
+      .slide .pr-escala .lin { transform: scaleX(0); }
+      .pr-escala span { font-family: var(--f-mono); font-size: clamp(.62rem,.8vw,.75rem); letter-spacing: .14em; text-transform: uppercase; color: var(--c-fg-2); }
+      .pr-stats { display: flex; gap: 2.4vw; align-items: baseline; }
+      .pr-stats div { display: flex; align-items: baseline; gap: .6vw; }
+      .pr-stats b { font-family: var(--f-display); font-size: clamp(1.8rem,3.2vw,3rem); color: var(--c-accent); font-weight: 600; line-height: 1; }
+      .pr-stats span { font-family: var(--f-body); font-size: clamp(.8rem,1.05vw,.98rem); color: var(--c-fg-2); }
+      /* slide 5 */
+      .pr-dos { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2.2vw; min-height: 0; }
+      .pr-sent { display: grid; gap: 1.1vh; align-content: start; }
+      .pr-sent .pr-box .t span { color: var(--c-fg-3); }
+      .pr-imgs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; align-content: start; }
+      .pr-imgs2 .pr-fig img { aspect-ratio: 1/1; }
+      /* slide 6 */
+      .pr-hall { display: grid; grid-template-columns: 1.05fr .95fr; gap: 2vw; min-height: 0; }
+      .pr-hall .imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; align-content: start; }
+      .pr-hall .imgs .pr-fig img { aspect-ratio: 1/1; }
+      .pr-hall .txt { display: grid; gap: 1.1vh; align-content: start; }
+      /* slide 7 */
+      .pr-prox { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2.2vh; flex: 1; }
+      .pr-prox .gran { font-family: var(--f-display); font-weight: 600; font-size: clamp(2.2rem,5vw,4.4rem); line-height: 1.04; color: var(--c-fg); margin: 0; }
+      .pr-prox .gran em { color: var(--c-accent); font-style: italic; }
+      .pr-esqueleto { display: flex; align-items: center; gap: 1.2vw; margin-top: 1vh; }
+      .pr-esqueleto .nodo { border: 1.5px dashed var(--c-fg-3); border-radius: 10px; padding: 1.4vh 1.4vw; font-family: var(--f-body); font-size: clamp(.8rem,1.1vw,1rem); color: var(--c-fg-2); min-width: 13vw; background: rgba(100,120,194,.05); }
+      .slide.is-active .pr-esqueleto .nodo { animation: kFadeUp .6s var(--ease-enter) both, prPulsoBorde 3s ease-in-out 1.5s infinite; }
+      .pr-esqueleto .fl { color: var(--c-fg-3); font-size: 1.6vw; }
+      @keyframes prPulsoBorde { 0%,100% { border-color: var(--c-fg-3); } 50% { border-color: var(--c-accent); } }
+      /* slide 8 */
+      .pr-sig { display: grid; grid-template-columns: 1.25fr .75fr; gap: 2.4vw; min-height: 0; }
+      .pr-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.2vh; counter-reset: n; align-content: start; }
+      .pr-lista li { counter-increment: n; display: grid; grid-template-columns: 2.6vw 1fr; gap: 1vw; align-items: start; font-family: var(--f-body); font-size: clamp(.82rem,1.12vw,1.04rem); color: var(--c-fg); line-height: 1.4; }
+      .pr-lista li::before { content: counter(n); font-family: var(--f-mono); font-size: clamp(.7rem,.9vw,.86rem); color: #0a0e1c; background: var(--c-accent); border-radius: 50%; width: 2vw; height: 2vw; min-width: 24px; min-height: 24px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+      .pr-lista small { display: block; color: var(--c-fg-2); font-size: .86em; }
+      .pr-lista li.alta::before { background: var(--c-azul); color: #fff; }
+      /* slide 9 */
+      .pr-refs { column-count: 2; column-gap: 2.6vw; }
+      .pr-refs p { margin: 0 0 1.3vh; break-inside: avoid; font-family: var(--f-body); font-size: clamp(.62rem,.8vw,.78rem); color: var(--c-fg-2); line-height: 1.5; padding-left: 1.6em; text-indent: -1.6em; }
+      .pr-refs p em { font-style: italic; color: var(--c-fg); }
+      @media print { .pr-bucle, .pr-ppunto, .pr-punta, .pr-late { opacity: 1 !important; } .pr-escala .lin { transform: none !important; } }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAV DOTS: generated by JS -->
+    <nav id="nav-dots"></nav>
+    <!-- SLIDE COUNTER: generated by JS -->
+    <div id="slide-counter"></div>
+
+    <!-- Utilidades añadidas -->
+    <div class="formato-conmutador" id="formato-conmutador" role="group" aria-label="Formato de proyección">
+      <button type="button" id="btn-formato-169" class="util-btn formato-btn activo" style="position:static" aria-pressed="true">16:9</button>
+      <button type="button" id="btn-formato-43" class="util-btn formato-btn" style="position:static" aria-pressed="false">4:3</button>
+    </div>
+    <button type="button" id="btn-pdf" class="util-btn">↓ Descargar PDF</button>
+    <div id="simulador-4-3" class="simulador-4-3 oculto">
+      <button type="button" id="btn-cerrar-simulador" class="util-btn">✕ volver a 16:9</button>
+      <iframe id="iframe-4-3" title="Vista previa en 4:3" src="about:blank"></iframe>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         DECK — all slides live here, side by side
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="deck">
+
+      <section class="slide dark slide--ca slide--ca-portada">
+        <header class="slide-chrome">
+          <span class="label muted">Portada</span>
+          <span class="label muted">01</span>
+        </header>
+        <div class="slide-body">
+          <p class="eyebrow">TALLER DE PROTOTIPOS 2026 · MCD UAI · ENTREGA FINAL</p>
+          <h1 data-anim="fade-up" data-delay="0">Resina con lapislázuli chileno</h1>
+          <p class="bajada" data-anim="fade-up" data-delay="1">¿Se puede curar e imprimir resina con polvo de lapislázuli? Prototipo de mediana resolución sensorial.</p>
+          <div class="portada-pie" data-anim="fade-up" data-delay="2">
+            <p class="autoras">Cabezas, F. · López S., V.</p>
+            <p class="contexto">Taller de Prototipos · Joaquín Rosas y Max Pazols</p>
+          </div>
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Magíster en Ciencias del Diseño, UAI · 3 de octubre de 2026</span>
+          <span class="label muted">01 / 09</span>
+        </div>
+        <aside class="notas"><b>10 s.</b> Presentar la pregunta: si la resina de impresión cura con lapislázuli molido y qué se percibe en el material. Las muestras reales van en la mano de quien presenta.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Dónde estamos</span>
+          <span class="label muted">02</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Mediana resolución: un modelo sensorial con material real</h2>
+          <div class="pr-prog">
+            <article class="pr-card" data-anim="fade-up" data-delay="1">
+              <img class="ph" src="img/baja-frascos.jpg" alt="Frascos con resina y sustitutos minerales de la evaluación 3">
+              <div class="cu">
+                <p class="tag">Baja · mock-up</p>
+                <h3>Sustitutos en frascos</h3>
+                <p class="tx">Cemento y esmalte en resina. 20 y 33 wt% no curaron por dentro; 7 wt% sí.</p>
+                <p class="pr-cap">Evaluación 3 (Cabezas y López S., 2026)</p>
+              </div>
+            </article>
+            <article class="pr-card aqui" data-anim="fade-up" data-delay="3">
+              <span class="pr-aqui">ESTAMOS AQUÍ</span>
+              <img class="ph" src="img/b-p15-banda.jpg" alt="Benchy XP2 impreso con lapislázuli al 15% nominal, a contraluz">
+              <div class="cu">
+                <p class="tag">Mediana · modelo sensorial</p>
+                <h3>Benchy XP2 con lapislázuli real</h3>
+                <p class="tx">Polvo A sin tamizar en resina SLA, tres cargas. Se observan color, translucidez, detalle y rigidez.</p>
+              </div>
+            </article>
+            <article class="pr-card proxima" data-anim="fade-up" data-delay="5">
+              <div class="ph vacia">próxima etapa</div>
+              <div class="cu">
+                <p class="tag">Alta · funcional</p>
+                <h3>Polvo tamizado y subcargas de color</h3>
+                <p class="tx">Granulometrías determinadas y lazurita extraída para hacer subcargas de color dentro del material compuesto.</p>
+              </div>
+            </article>
+          </div>
+          <p class="pr-cap" data-anim="fade-in" data-delay="6">El prototipo funciona aquí como componente experimental: una hipótesis física (Wensveen y Matthews, 2015, citado en Rosas y Pazols, 2026).</p>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">02 / 09</span>
+        </div>
+        <aside class="notas"><b>45 s.</b> Situar el trabajo en la progresión de la clase: baja es un mock-up conceptual, mediana es un modelo sensorial que comprueba una hipótesis y alta es un prototipo funcional. Este benchy es mediana sensorial porque usa lapislázuli real, pero sin tamizado calibrado ni ensayo normalizado.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Método</span>
+          <span class="label muted">03</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Método: de la mezcla al benchy</h2>
+          <div style="min-height:0;display:flex;align-items:center;justify-content:center;"><svg class="pr-flujo" viewBox="0 0 1000 292" role="img" aria-label="Diagrama de flujo: pesar polvo, mezclar con resina, homogeneizar, filtrar, imprimir, desprender y lavar, decidir si queda mezcla, post-curar y fotografiar"><g class="flujo-caja" style="animation-delay:0.35s"><rect x="20" y="12" width="210" height="72" rx="9"/><text class="flujo-t" x="125.0" y="45.0">Pesar polvo A</text><text class="flujo-s" x="125.0" y="64.0">gramera con decimales</text></g><path class="flujo-linea" d="M230,48 H268" style="animation-delay:0.6499999999999999s" fill="none"/><polygon class="pr-punta" points="270,48 261,42.5 261,53.5" style="animation-delay:1.3499999999999999s"/><g class="flujo-caja" style="animation-delay:0.97s"><rect x="270" y="12" width="210" height="72" rx="9"/><text class="flujo-t" x="375.0" y="45.0">Mezclar con resina</text><text class="flujo-s" x="375.0" y="64.0">60 mL Creality Transparent</text></g><path class="flujo-linea" d="M480,48 H518" style="animation-delay:1.27s" fill="none"/><polygon class="pr-punta" points="520,48 511,42.5 511,53.5" style="animation-delay:1.97s"/><g class="flujo-caja" style="animation-delay:1.59s"><rect x="520" y="12" width="210" height="72" rx="9"/><text class="flujo-t" x="625.0" y="45.0">Homogeneizar</text><text class="flujo-s" x="625.0" y="64.0">polvo sin tamizar</text></g><path class="flujo-linea" d="M730,48 H768" style="animation-delay:1.8900000000000001s" fill="none"/><polygon class="pr-punta" points="770,48 761,42.5 761,53.5" style="animation-delay:2.59s"/><g class="flujo-caja" style="animation-delay:2.21s"><rect x="770" y="12" width="210" height="72" rx="9"/><text class="flujo-t" x="875.0" y="45.0">Filtrar</text><text class="flujo-s" x="875.0" y="64.0">malla de 190 µm</text></g><path class="flujo-linea" d="M875,84 V122 H97 V156" style="animation-delay:2.51s" fill="none"/><polygon class="pr-punta" points="97,158 91.5,149 102.5,149" style="animation-delay:3.21s"/><g class="flujo-caja acento" style="animation-delay:2.83s"><rect x="10" y="160" width="175" height="72" rx="9"/><text class="flujo-t" x="97.5" y="193.0">Imprimir benchy</text><text class="flujo-s" x="97.5" y="212.0">XP2 · 0,05 mm · 3,5 s</text></g><path class="flujo-linea" d="M185,196 H221" style="animation-delay:3.13s" fill="none"/><polygon class="pr-punta" points="223,196 214,190.5 214,201.5" style="animation-delay:3.83s"/><g class="flujo-caja" style="animation-delay:3.45s"><rect x="223" y="160" width="175" height="72" rx="9"/><text class="flujo-t" x="310.5" y="193.0">Desprender y lavar</text><text class="flujo-s" x="310.5" y="212.0">espátula + alcohol isopropílico</text></g><path class="flujo-linea" d="M398,196 H434" style="animation-delay:3.75s" fill="none"/><polygon class="pr-punta" points="436,196 427,190.5 427,201.5" style="animation-delay:4.45s"/><g class="flujo-caja acento" style="animation-delay:4.07s"><polygon points="516,152 596,196 516,240 436,196"/><text class="flujo-t" x="516" y="193">¿Queda</text><text class="flujo-t" x="516" y="211">mezcla?</text></g><path class="flujo-linea" d="M596,196 H632" style="animation-delay:4.37s" fill="none"/><polygon class="pr-punta" points="634,196 625,190.5 625,201.5" style="animation-delay:5.07s"/><text class="flujo-rama pr-late" x="614" y="187" text-anchor="middle" style="--d:4.57s">no</text><g class="flujo-caja" style="animation-delay:4.69s"><rect x="634" y="160" width="170" height="72" rx="9"/><text class="flujo-t" x="719.0" y="193.0">Post-curar</text><text class="flujo-s" x="719.0" y="212.0">lámpara de manicure · 5 × 90 s</text></g><path class="flujo-linea" d="M804,196 H840" style="animation-delay:4.99s" fill="none"/><polygon class="pr-punta" points="842,196 833,190.5 833,201.5" style="animation-delay:5.69s"/><g class="flujo-caja" style="animation-delay:5.31s"><rect x="842" y="160" width="148" height="72" rx="9"/><text class="flujo-t" x="916.0" y="193.0">Fotografiar</text><text class="flujo-s" x="916.0" y="212.0">a contraluz, en la ventana</text></g><path class="pr-bucle" d="M516,240 V262 H97 V236" style="animation-delay:5.93s"/><polygon class="pr-punta" points="97,234 91.5,244 102.5,244" style="animation-delay:6.43s;fill:var(--c-accent)"/><text class="flujo-rama pr-late" x="306" y="282" text-anchor="middle" style="--d:6.2299999999999995s">sí: otro benchy con la misma mezcla (5 a 10 min)</text></svg></div>
+          <div class="pr-fila" data-anim="fade-up" data-delay="3">
+            <figure class="pr-fig"><img src="img/resina.jpg" alt="Frasco de resina Creality Transparent Standard Resin Plus" style="object-position:center 70%"><figcaption><b>Resina</b>Creality Transparent Standard Resin Plus</figcaption></figure>
+            <figure class="pr-fig"><img src="img/polvo-bolsa.jpg" alt="Bolsa de polvo de lapislázuli del Molino 2" style="object-position:center 52%"><figcaption><b>Polvo A</b>Molino 2, 2 h, sin tamizar</figcaption></figure>
+            <figure class="pr-fig"><img src="img/granos.jpg" alt="Granos A y B con regla"><figcaption><b>Aglomerados blandos</b>no es tamaño de partícula</figcaption></figure>
+            <div class="pr-chips">
+              <span class="pr-chip"><b>Creality LD-002H</b> · MSLA 405 nm</span>
+              <span class="pr-chip"><b>60 mL</b> de resina por mezcla</span>
+              <span class="pr-chip"><b>0,05 mm</b> · 4 capas base</span>
+              <span class="pr-chip"><b>3,5 s</b> capa · <b>50 s</b> base</span>
+              <span class="pr-chip">Cargas nominales <b>7 · 15 · 25 wt%</b></span>
+            </div>
+          </div>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">03 / 09</span>
+        </div>
+        <aside class="notas"><b>60 s.</b> Recorrer el diagrama de izquierda a derecha: se pesa el polvo, se mezcla con 60 mL de resina, se homogeneiza y se filtra por malla de 190 micras. Se imprime el benchy XP2, se desprende y se lava con alcohol isopropílico. Mientras quede mezcla se repite (5 a 10 min entre piezas) y al final se post-cura a mano con la lámpara de manicure, 5 ciclos de 90 s. Mencionar que los aglomerados de la foto se deshacen y no miden tamaño de partícula.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Resultado 1</span>
+          <span class="label muted">04</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">La resina cura con lapislázuli en las tres cargas</h2>
+          <div class="pr-grid-4">
+            <figure class="pr-fig" data-anim="fade-up" data-delay="1"><img src="img/b-ctrl.jpg" alt="Benchy de control sin polvo"><figcaption><b>Control · 0%</b>resina pura, 1 pieza</figcaption></figure>
+            <figure class="pr-fig" data-anim="fade-up" data-delay="2"><img src="img/b-p7.jpg" alt="Benchy con 7% nominal de lapislázuli"><figcaption><b>7% nominal</b>carga real 6 a 7%, 4 piezas</figcaption></figure>
+            <figure class="pr-fig" data-anim="fade-up" data-delay="3"><img src="img/b-p15.jpg" alt="Benchy con 15% nominal de lapislázuli"><figcaption><b>15% nominal</b>carga real 12 a 13%, 5 piezas</figcaption></figure>
+            <figure class="pr-fig" data-anim="fade-up" data-delay="4"><img src="img/b-p25.jpg" alt="Benchy con 25% nominal de lapislázuli"><figcaption><b>25% nominal</b>carga real 18 a 20%, 5 piezas</figcaption></figure>
+          </div>
+          <div class="pr-escala"><span>Más translúcido</span><div class="lin"></div><span>Más opaco</span></div>
+          <div class="pr-stats" data-anim="fade-up" data-delay="6">
+            <div><b>15</b><span>benchies impresos</span></div>
+            <div><b>0</b><span>roturas</span></div>
+            <div><b>3</b><span>cargas curadas</span></div>
+          </div>
+          <p class="pr-cap">Fotos a contraluz de ventana. Carga real calculada con los gramos pesados; no descuenta el polvo retenido por el filtro de 190 µm.</p>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">04 / 09</span>
+        </div>
+        <aside class="notas"><b>60 s.</b> Mostrar las cuatro piezas en el mismo encuadre. La resina curó con las tres cargas y el detalle fino se resuelve incluso al 25 por ciento nominal. Aclarar que nominal es lo rotulado y real es lo calculado con los gramos pesados, que es menor porque 'porcentaje por mililitro' no equivale a peso en peso. Mencionar que ninguna de las 15 piezas se rompió.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Resultado 2</span>
+          <span class="label muted">05</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Lo que perciben la vista y el tacto</h2>
+          <div class="pr-dos">
+            <div class="pr-sent">
+              <div class="pr-box" data-anim="fade-up" data-delay="1"><p class="t">Vista · translucidez</p><p>Baja de alta (7%) a casi opaca (25%): la luz solo pasa por las zonas delgadas.</p></div>
+              <div class="pr-box" data-anim="fade-up" data-delay="2"><p class="t">Vista · tono</p><p>De azul grisáceo a azul oscuro. Impreso, el azul es más intenso que el del polvo seco.</p></div>
+              <div class="pr-box oro" data-anim="fade-up" data-delay="3"><p class="t">Tacto · materialidad</p><p>No se siente pétreo: se siente como una resina con pigmento.</p></div>
+              <div class="pr-box oro" data-anim="fade-up" data-delay="4"><p class="t">Tacto · rigidez</p><p>A más carga, más rígido al flexionar; costaba más desprenderlo de la plataforma metálica.</p></div>
+              <p class="pr-cap" data-anim="fade-in" data-delay="5">Observación directa de la autora, sin instrumentos. No hay medición de color, transmitancia ni fuerza.</p>
+            </div>
+            <div class="pr-imgs2">
+              <figure class="pr-fig" data-anim="fade-up" data-delay="3"><img src="img/polvo-bolsa.jpg" alt="Polvo seco de lapislázuli sin tamizar" style="object-position:center 40%"><figcaption><b>Polvo seco</b>blanco azulado, lechoso</figcaption></figure>
+              <figure class="pr-fig" data-anim="fade-up" data-delay="4"><img src="img/b-p25.jpg" alt="Benchy impreso al 25% nominal" style="object-position:30% center"><figcaption><b>Impreso al 25% nominal</b>azul más intenso y oscuro</figcaption></figure>
+            </div>
+          </div>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">05 / 09</span>
+        </div>
+        <aside class="notas"><b>75 s.</b> Invitar a pasar las muestras por la sala. Decir qué se percibe: la translucidez baja con la carga, el azul impreso es más intenso que el polvo seco, el material no se siente como piedra sino como resina con pigmento y se vuelve más rígido al subir la carga. Aclarar que es percepción sin instrumentos.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Hallazgo y límites</span>
+          <span class="label muted">06</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Hallazgo: los agujeros no atraviesan, ni en el control</h2>
+          <div class="pr-hall">
+            <div class="imgs">
+              <figure class="pr-fig" data-anim="fade-up" data-delay="1"><img src="img/laminador-superior.jpg" alt="Modelo en el laminador con el listón de agujeros marcado"><figcaption><b>Esperado</b>13 agujeros pasantes de 3,0 a 0,2 mm, medidos en el modelo</figcaption></figure>
+              <figure class="pr-fig" data-anim="fade-up" data-delay="2"><img src="img/control-oblicua.jpg" alt="Control sin polvo, vista oblicua" style="object-position:60% center"><figcaption><b>Obtenido</b>hoyos poco profundos, también sin polvo</figcaption></figure>
+            </div>
+            <div class="txt">
+              <div class="pr-box oro" data-anim="fade-up" data-delay="2"><p class="t">Hipótesis</p><p>Exposición de las 4 capas base (50 s): una película cubre los agujeros. Se sugiere una base de 8 a 12 veces la capa y bajo unos 30 s (Core Electronics, s. f.; Vastamäki, 2019).</p></div>
+              <div class="pr-box" data-anim="fade-up" data-delay="3"><p class="t">Prueba</p><p>Repetir el control con base de 15 a 20 s y medir la profundidad con una aguja.</p></div>
+              <div class="pr-box rojo" data-anim="fade-up" data-delay="4"><p class="t">Límites</p><ul><li>La carga real es menor que la nominal.</li><li>Sin serie con polvo B ni mediciones.</li><li>Post-curado manual con lámpara de manicure.</li></ul></div>
+            </div>
+          </div>
+          <div class="pr-chips" data-anim="fade-up" data-delay="5">
+            <span class="pr-chip"><b>Testeo 1</b> · sustitutos en frascos</span>
+            <span class="pr-chip"><b>Testeo 2</b> · lapislázuli real en resina</span>
+          </div>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">06 / 09</span>
+        </div>
+        <aside class="notas"><b>60 s.</b> Mostrar el modelo con los 13 agujeros pasantes y la pieza real, donde son hoyos ciegos, incluso en el control sin polvo. Por eso no es culpa del lapislázuli. La hipótesis es la exposición de las capas base. Cerrar con los límites y con los dos testeos que respaldan la entrega: el de sustitutos de la evaluación 3 y este con lapislázuli real.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Testeo 3</span>
+          <span class="label muted">07</span>
+        </header>
+        <div class="slide-body">
+
+          <div class="pr-prox">
+            <span class="pr-chip" data-anim="fade-in" data-delay="0"><b>Testeo 3</b> · simulación FDM</span>
+            <h2 class="gran" data-anim="fade-up" data-delay="1">Próximamente: <em>PLA con lapislázuli</em></h2>
+            <p class="sub" data-anim="fade-up" data-delay="2">PLA con polvo al 10 wt%, la carga de mejor flexión en PLA con pizarra (Khan et al., 2023). Se reprograma con un equipo de calentamiento que alcance la temperatura de fusión del PLA.</p>
+            <div class="pr-esqueleto">
+              <div class="nodo" data-anim="fade-up" data-delay="3">8 g de PLA + 0,89 g de polvo</div><span class="fl">→</span>
+              <div class="nodo" data-anim="fade-up" data-delay="4">Fusión y mezcla</div><span class="fl">→</span>
+              <div class="nodo" data-anim="fade-up" data-delay="5">Evaluar encapsulado</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">07 / 09</span>
+        </div>
+        <aside class="notas"><b>20 s.</b> La simulación con PLA queda como próximo testeo: el equipo de calentamiento disponible no alcanzó la temperatura de fusión del PLA. Ya está definida la carga, 10 por ciento, y los gramos.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Próximos pasos</span>
+          <span class="label muted">08</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Próximos pasos: de lo sensorial a lo normalizado</h2>
+          <div class="pr-sig">
+            <ol class="pr-lista">
+              <li data-anim="fade-up" data-delay="1"><span>Tamizado y granulometría de laboratorio<small>para conocer el tamaño real de los polvos A y B</small></span></li>
+              <li class="alta" data-anim="fade-up" data-delay="2"><span>Lazurita extraída: subcargas de color<small>alta resolución, dentro de las cargas de lapislázuli</small></span></li>
+              <li data-anim="fade-up" data-delay="3"><span>Probetas ASTM D638, D790, D695 y D256<small>mediana resolución normalizada</small></span></li>
+              <li data-anim="fade-up" data-delay="4"><span>Ensayo de sedimentación y pieza larga de 5 a 10 h<small>¿cambia la translucidez entre las primeras y las últimas capas?</small></span></li>
+              <li data-anim="fade-up" data-delay="5"><span>Serie con polvo B (Molino 3) y repetir el control<small>con menor exposición base</small></span></li>
+              <li data-anim="fade-up" data-delay="6"><span>Usos para diseñadores, artesanos y joyeros<small>después del banco de pruebas</small></span></li>
+            </ol>
+            <figure class="pr-fig wide" data-anim="fade-up" data-delay="3"><img src="img/cad-probetas.jpg" alt="Modelo CAD de las probetas ASTM" style="background:#fff"><figcaption><b>Probetas ASTM modeladas</b>tracción, flexión, compresión e impacto Izod; aún sin imprimir</figcaption></figure>
+          </div>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">08 / 09</span>
+        </div>
+        <aside class="notas"><b>60 s.</b> Orden de los pasos: primero conocer la granulometría con el tamizado de laboratorio, luego la alta resolución con subcargas de color usando lazurita extraída, las probetas ASTM, el ensayo de sedimentación y la pieza larga, la serie con polvo B y los usos para otros usuarios una vez que exista el banco de pruebas.</aside>
+      </section>
+
+      <section class="slide dark slide--ca slide--pr">
+        <header class="slide-chrome">
+          <span class="label muted">Referencias</span>
+          <span class="label muted">09</span>
+        </header>
+        <div class="slide-body">
+
+          <h2 data-anim="fade-up" data-delay="0">Referencias</h2>
+          <div class="pr-refs" data-anim="fade-up" data-delay="1">
+            <p>3D Printing Space. (s. f.). <em>LD-002H curing in masked areas</em> [Foro]. https://3dprintingspace.com/t/ld-002h-curing-in-masked-areas/1669</p>
+            <p>Cabezas, F., &amp; López S., V. (2026). <em>Biocompuesto lapislázuli: Prototipado aplicado y estrategias sostenibles</em> [Informe de Evaluación 3, Inteligencia Material]. Magíster en Ciencias del Diseño, Universidad Adolfo Ibáñez.</p>
+            <p>Core Electronics. (s. f.). <em>Optimal layer exposure time for perfect resin prints</em> [Tutorial]. https://core-electronics.com.au/tutorials/perfect-resin-print-exposure-setting.html</p>
+            <p>Khan, I., Kumar, N., Yadav, J. S., Choudhary, M., Chauhan, A., &amp; Singh, T. (2023). Utilization of waste slate powder in poly(lactic acid) based composite for 3D printer filament. <em>Journal of Materials Research and Technology, 24</em>, 703-714. https://doi.org/10.1016/j.jmrt.2023.03.046</p>
+            <p>Rosas, J., &amp; Pazols, M. (2026). <em>Prototipado en procesos de diseño</em> [Diapositivas de clase]. Taller de Prototipos, Magíster en Ciencias del Diseño, Universidad Adolfo Ibáñez.</p>
+            <p>Vastamäki, T. (2019). <em>Stereolithography ceramic 3D-printing</em> [Tesis de maestría, Tampere University].</p>
+            <p>Wensveen, S., &amp; Matthews, B. (2015). Prototypes and prototyping in design research. En P. A. Rodgers &amp; J. Yee (Eds.), <em>The Routledge companion to design research</em> (pp. 262-276). Routledge. (Citado en Rosas y Pazols, 2026.)</p>
+          </div>
+          <p class="pr-cap" data-anim="fade-in" data-delay="3">Bitácora completa del proceso en Miró. Documento de análisis y fotos originales en la bóveda de la tesis.</p>
+
+        </div>
+        <div class="slide-foot">
+          <span class="label muted">Taller de Prototipos 2026 · MCD UAI</span>
+          <span class="label muted">09 / 09</span>
+        </div>
+        <aside class="notas"><b>Sin narrar.</b> Dejar proyectada mientras se responden preguntas.</aside>
+      </section>
+
+    </div>
+    <!-- /deck -->
+
+    <script>
+      /* ══════════════════════════════════════════════════════════════════════
+         SIGNAL PRESENTATION ENGINE
+         Self-contained navigation: keyboard, touch, mouse-wheel, nav-dots.
+         No external dependencies.
+         ══════════════════════════════════════════════════════════════════════ */
+      (function () {
+        "use strict";
+
+        /* ── State ─────────────────────────────────────────────────────────── */
+        const deck = document.getElementById("deck");
+        const slides = Array.from(document.querySelectorAll(".slide"));
+        const dotsEl = document.getElementById("nav-dots");
+        const counter = document.getElementById("slide-counter");
+        const total = slides.length;
+        let current = 0;
+        let animating = false;
+
+        /* ── Bootstrap: set deck width, build nav dots ─────────────────────── */
+        function init() {
+          // The deck is one wide strip — width equals N full viewports
+          deck.style.width = total + "00vw";
+
+          // Build one dot per slide
+          slides.forEach(function (_, i) {
+            const btn = document.createElement("button");
+            btn.className = "nav-dot";
+            btn.setAttribute("aria-label", "Go to slide " + (i + 1));
+            btn.addEventListener("click", function () {
+              goTo(i);
+            });
+            dotsEl.appendChild(btn);
+          });
+
+          // Activate the first slide immediately
+          goTo(0, true); // true = skip transition on load
+        }
+
+        /* ── goTo: the single source of truth for navigation ───────────────── */
+        function goTo(index, instant) {
+          // Clamp to valid range
+          index = Math.max(0, Math.min(total - 1, index));
+          if (index === current && !instant) return;
+
+          // Mark animating to block rapid key/swipe spam
+          animating = true;
+
+          // Deactivate current slide: reset animations by toggling is-active
+          const prev = slides[current];
+          prev.classList.remove("is-active");
+          // Force a reflow so removing then re-adding is-active (on same slide)
+          // actually re-triggers the keyframe animations
+          void prev.offsetWidth; // eslint-disable-line no-void
+
+          // Translate the deck
+          if (instant) {
+            // Remove transition temporarily for the initial load snap
+            deck.style.transition = "none";
+            deck.style.transform = "translateX(-" + index + "00vw)";
+            void deck.offsetWidth; // force reflow
+            deck.style.transition = "";
+          } else {
+            deck.style.transform = "translateX(-" + index + "00vw)";
+          }
+
+          // Activate new slide
+          current = index;
+          const next = slides[current];
+          next.classList.add("is-active");
+
+          // Update nav dots
+          Array.from(dotsEl.children).forEach(function (dot, i) {
+            dot.classList.toggle("is-active", i === current);
+          });
+
+          // Update counter: "3 / 12"
+          counter.textContent = current + 1 + " / " + total;
+
+          // Unlock after transition completes
+          const delay = instant
+            ? 0
+            : parseFloat(getComputedStyle(deck).transitionDuration) * 1000;
+          setTimeout(function () {
+            animating = false;
+          }, delay);
+        }
+
+        /* ── Keyboard navigation ──────────────────────────────────────────── */
+        document.addEventListener("keydown", function (e) {
+          if (animating) return;
+          if (
+            e.key === "ArrowRight" ||
+            e.key === "ArrowDown" ||
+            e.key === " "
+          ) {
+            e.preventDefault();
+            goTo(current + 1);
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            goTo(current - 1);
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            goTo(0);
+          } else if (e.key === "End") {
+            e.preventDefault();
+            goTo(total - 1);
+          }
+        });
+
+        /* ── Mouse-wheel navigation ───────────────────────────────────────── */
+        let wheelCooldown = false;
+        document.addEventListener(
+          "wheel",
+          function (e) {
+            e.preventDefault();
+            if (animating || wheelCooldown) return;
+            wheelCooldown = true;
+            setTimeout(function () {
+              wheelCooldown = false;
+            }, 900);
+            if (e.deltaY > 0 || e.deltaX > 0) {
+              goTo(current + 1);
+            } else {
+              goTo(current - 1);
+            }
+          },
+          { passive: false },
+        );
+
+        /* ── Touch swipe navigation ───────────────────────────────────────── */
+        let touchStartX = null;
+        let touchStartY = null;
+
+        document.addEventListener(
+          "touchstart",
+          function (e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          },
+          { passive: true },
+        );
+
+        document.addEventListener(
+          "touchend",
+          function (e) {
+            if (touchStartX === null) return;
+            const dx = touchStartX - e.changedTouches[0].clientX;
+            const dy = touchStartY - e.changedTouches[0].clientY;
+            // Only respond if horizontal swipe is dominant
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+              if (animating) return;
+              if (dx > 0) {
+                goTo(current + 1); // swipe left: next
+              } else {
+                goTo(current - 1); // swipe right: prev
+              }
+            }
+            touchStartX = null;
+            touchStartY = null;
+          },
+          { passive: true },
+        );
+
+        /* ── Boot ─────────────────────────────────────────────────────────── */
+        init();
+      })();
+    </script>
+
+    <script>
+      /* ══════════════════════════════════════════════════════════════════════
+         UTILIDADES AÑADIDAS — PDF, vista previa 4:3, notas de orador.
+         Va aparte del motor original para poder actualizar el template base
+         sin perder esto (y viceversa).
+         ══════════════════════════════════════════════════════════════════════ */
+      (function () {
+        "use strict";
+
+        /* Descargar PDF = diálogo de impresión del navegador ("Guardar como
+           PDF"). No hay conversión propia: las reglas @media print ya dejan
+           una diapositiva por página. */
+        var btnPdf = document.getElementById("btn-pdf");
+        if (btnPdf) btnPdf.addEventListener("click", function () { window.print(); });
+
+        /* Notas de orador */
+        document.addEventListener("keydown", function (e) {
+          if (e.metaKey || e.ctrlKey || e.altKey) return;
+          if (e.key === "n" || e.key === "N") document.body.classList.toggle("con-notas");
+          if (e.key === "p" || e.key === "P") window.print();
+        });
+
+        /* Vista previa 4:3 */
+        var embebido = new URLSearchParams(location.search).get("embed") === "1";
+        var conmutador = document.getElementById("formato-conmutador");
+        if (embebido) {
+          /* adentro del iframe sobra todo el chrome de utilidades */
+          if (conmutador) conmutador.remove();
+          if (btnPdf) btnPdf.remove();
+          var dots = document.getElementById("nav-dots");
+          if (dots) dots.style.display = "none";
+          return;
+        }
+
+        var btn169 = document.getElementById("btn-formato-169");
+        var btn43 = document.getElementById("btn-formato-43");
+        var sim = document.getElementById("simulador-4-3");
+        var iframe = document.getElementById("iframe-4-3");
+        var btnCerrar = document.getElementById("btn-cerrar-simulador");
+
+        function escalar() {
+          var margen = 0.9;
+          var escala = Math.min(
+            (window.innerWidth * margen) / 1024,
+            (window.innerHeight * margen) / 768
+          );
+          iframe.style.transform = "scale(" + escala + ")";
+        }
+        function abrir() {
+          iframe.src = "index.html?embed=1";
+          sim.classList.remove("oculto");
+          escalar();
+          btn43.classList.add("activo"); btn43.setAttribute("aria-pressed", "true");
+          btn169.classList.remove("activo"); btn169.setAttribute("aria-pressed", "false");
+        }
+        function cerrar() {
+          sim.classList.add("oculto");
+          iframe.src = "about:blank";
+          btn169.classList.add("activo"); btn169.setAttribute("aria-pressed", "true");
+          btn43.classList.remove("activo"); btn43.setAttribute("aria-pressed", "false");
+        }
+        if (btn43) btn43.addEventListener("click", abrir);
+        if (btn169) btn169.addEventListener("click", cerrar);
+        if (btnCerrar) btnCerrar.addEventListener("click", cerrar);
+        window.addEventListener("resize", function () {
+          if (sim && !sim.classList.contains("oculto")) escalar();
+        });
+      })();
+    </script>
+  </body>
+
+</html>
