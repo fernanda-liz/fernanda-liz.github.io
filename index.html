@@ -197,10 +197,13 @@
   .area svg { width: 2.4rem; height: 2.4rem; fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
   .area h3 { margin: 0.1rem 0 0.3rem; font-family: var(--serif); font-weight: 400; font-size: 1.15rem; }
   .area p { margin: 0; color: var(--dim); font-size: 0.93rem; line-height: 1.55; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; padding-top: 2.2rem; border-top: 1px solid var(--line); }
-  .stat b { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .stats { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 1.5rem; margin-top: 4rem; padding-top: 2.2rem; border-top: 1px solid var(--line); }
+  .stat b { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stat.big b { font-size: clamp(2.8rem, 6.6vw, 5.6rem); }
   .stat span.t { display: block; margin-top: 0.7rem; max-width: 16rem; color: var(--dim); font-size: 0.9rem; }
-  @media (max-width: 700px) { .stats { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .stats { grid-template-columns: 1fr 1fr; } .stat.big { grid-column: span 2; } }
+  @media (max-width: 520px) { .stats { grid-template-columns: 1fr; } .stat.big { grid-column: auto; } }
+  .chip.gold { border-color: rgba(217, 178, 90, 0.6); color: var(--gold); }
 
   /* Experiencia */
   .timeline { position: relative; margin-top: 3rem; }
@@ -224,6 +227,25 @@
     .tl-item::before { left: calc(0.45rem - 5.5px); }
     .tl-when { text-align: left; }
   }
+
+  .phases { display: grid; gap: 1.3rem; margin: 0; padding: 0; list-style: none; }
+  .phase { position: relative; padding-left: 1.4rem; border-left: 1px solid var(--line); }
+  .phase::before { content: ""; position: absolute; left: -4px; top: 0.3rem; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+  .phase h4 { margin: 0 0 0.3rem; font-family: var(--mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+  .phase p { margin: 0; color: #cfd4e6; font-size: 0.97rem; line-height: 1.6; }
+  .phase p strong { color: var(--text); font-weight: 500; }
+  .tl-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: 0.6rem; margin-top: 1.4rem; }
+  .shot { all: unset; box-sizing: border-box; position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 3; border: 1px solid var(--line); border-radius: 10px; cursor: zoom-in; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.92); transition: transform 1.2s var(--ease), filter 0.5s ease; }
+  .shot:hover img, .shot:focus-visible img { transform: scale(1.07); filter: none; }
+  .shot:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .lb { position: fixed; inset: 0; z-index: 90; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 4vh 4vw; background: rgba(6, 9, 20, 0.93); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .lb.open { display: flex; animation: lbIn 0.4s var(--ease); }
+  .lb img { max-width: min(92vw, 1100px); max-height: 78vh; object-fit: contain; border: 1px solid var(--line); border-radius: 10px; }
+  .lb p { margin: 0; text-align: center; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; color: var(--dim); }
+  .lb button { all: unset; position: absolute; top: 1.2rem; right: 1.6rem; padding: 0.5rem 0.8rem; cursor: pointer; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.16em; color: var(--gold); }
+  .lb button:focus-visible { outline: 2px solid var(--gold); }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
 
   /* Formación */
   .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.6rem; }
@@ -323,6 +345,7 @@
         <span class="es">Diseño productos y los sistemas de manufactura que hacen posible que se repitan.</span>
       </p>
       <div class="chips rv">
+        <span class="chip gold"><span class="en">≈ US$300K estimated cost avoidance, 2022 to 2026</span><span class="es">≈ US$300 mil de gasto evitado estimado, 2022 a 2026</span></span>
         <span class="chip"><span class="en">Master's in Design Sciences, UAI (in progress)</span><span class="es">Magíster en Ciencias del Diseño, UAI (en curso)</span></span>
         <span class="chip">Chile</span>
       </div>
@@ -339,14 +362,14 @@
       <p class="kicker rv"><span class="en">01 · Profile</span><span class="es">01 · Perfil</span></p>
       <div class="grid2">
         <div>
-          <h2 class="rv"><span class="en">Design that <em>survives</em> production.</span><span class="es">Diseño que <em>sobrevive</em> a la producción.</span></h2>
+          <h2 class="rv"><span class="en">From pioneer to head of <em>a multi-plant program.</em></span><span class="es">De pionera a jefa de <em>un programa multiplanta.</em></span></h2>
           <p class="lead rv">
-            <span class="en">Industrial designer with <strong>more than eight years</strong> of professional practice across digital fabrication, circular economy and industrial additive manufacturing. Since 2022 I have laid the foundations of additive manufacturing at a multinational beverage and food company: the technology, the process standards, the management system and the people.</span>
-            <span class="es">Diseñadora industrial con <strong>más de ocho años</strong> de práctica profesional en fabricación digital, economía circular y manufactura aditiva industrial. Desde 2022 he sentado las bases de la manufactura aditiva en una compañía multinacional de bebidas y alimentos: la tecnología, los estándares de proceso, el sistema de gestión y las personas.</span>
+            <span class="en">In 2022 I started additive manufacturing at a multinational beverage and food company. Today I lead it: the technology has grown from a pilot to more plants, with an estimated <strong>US$300K in cumulative cost avoidance</strong> between 2022 and 2026.</span>
+            <span class="es">En 2022 comencé la manufactura aditiva en una compañía multinacional de bebidas y alimentos. Hoy la lidero: la tecnología pasó de un piloto a más plantas, con un <strong>gasto evitado acumulado estimado de US$300 mil</strong> entre 2022 y 2026.</span>
           </p>
           <p class="lead rv">
-            <span class="en">I am currently pursuing a Master's in Design Sciences, researching mineral composites for 3D printing, so that what I learn in the lab can reach the plant.</span>
-            <span class="es">Actualmente curso el Magíster en Ciencias del Diseño, donde investigo composites minerales para impresión 3D, para que lo que aprendo en el laboratorio llegue a la planta.</span>
+            <span class="en">Industrial designer with <strong>more than eight years</strong> of practice across digital fabrication, circular economy and industrial additive manufacturing. I am also pursuing a Master's in Design Sciences, researching mineral composites for 3D printing, so that what I learn in the lab can reach the plant.</span>
+            <span class="es">Diseñadora industrial con <strong>más de ocho años</strong> de práctica en fabricación digital, economía circular y manufactura aditiva industrial. También curso el Magíster en Ciencias del Diseño, donde investigo composites minerales para impresión 3D, para que lo que aprendo en el laboratorio llegue a la planta.</span>
           </p>
         </div>
         <div class="areas">
@@ -374,6 +397,7 @@
         </div>
       </div>
       <div class="stats">
+        <div class="stat big rv"><b data-to="300" data-pre="≈ US$" data-suf="K">≈ US$300K</b><span class="t"><span class="en">estimated cumulative cost avoidance, 2022 to 2026</span><span class="es">gasto evitado acumulado estimado, 2022 a 2026</span></span></div>
         <div class="stat rv"><b data-to="80" data-suf="%">80%</b><span class="t"><span class="en">lead-time reduction on pilot lines</span><span class="es">menos lead time en líneas piloto</span></span></div>
         <div class="stat rv"><b data-to="40" data-suf="+">40+</b><span class="t"><span class="en">designers, mechanics and engineers trained</span><span class="es">diseñadores, mecánicos e ingenieros capacitados</span></span></div>
         <div class="stat rv"><b data-to="3" data-suf="">3</b><span class="t"><span class="en">ISO standards certified: 9001, 14001 and 45001</span><span class="es">normas ISO certificadas: 9001, 14001 y 45001</span></span></div>
@@ -392,14 +416,26 @@
         <article class="tl-item rvx">
           <div class="tl-when"><span class="en">2022 to present</span><span class="es">2022 a la fecha</span></div>
           <div class="tl-body">
-            <h3 class="tl-role"><span class="en">Lead, Additive Manufacturing</span><span class="es">Líder de manufactura aditiva</span></h3>
+            <h3 class="tl-role"><span class="en">Head of Additive Manufacturing</span><span class="es">Jefa de manufactura aditiva</span></h3>
             <p class="tl-org"><span class="en">Multinational beverage and food company, Latin America</span><span class="es">Compañía multinacional de bebidas y alimentos, Latinoamérica</span></p>
-            <ul>
-              <li><span class="en">Laid the foundations of additive manufacturing: exploration, technology selection and first pilots, with an 80% lead-time reduction.</span><span class="es">Senté las bases de la manufactura aditiva: exploración, selección tecnológica y primeros pilotos, con 80% menos lead time.</span></li>
-              <li><span class="en">Standardized processes and built the management system for printed parts: governance, change management (MOC), TPM integration and HACCP validation.</span><span class="es">Estandaricé procesos y construí el sistema de gestión de piezas impresas: gobernanza, gestión del cambio (MOC), integración con TPM y validación HACCP.</span></li>
-              <li><span class="en">Created the Center of Excellence in Additive Manufacturing, with hub-and-spoke governance.</span><span class="es">Creé el Centro de Excelencia en Manufactura Aditiva, con gobernanza hub and spoke.</span></li>
-              <li><span class="en">Trained more than 40 designers, mechanics and engineers across three plants.</span><span class="es">Capacité a más de 40 diseñadores, mecánicos e ingenieros en tres plantas.</span></li>
-            </ul>
+            <ol class="phases">
+              <li class="phase">
+                <h4><span class="en">Pioneer · 2022</span><span class="es">Pionera · 2022</span></h4>
+                <p><span class="en">Launched additive manufacturing at the company: exploration, technology selection (Ultimaker) and first pilots, with an <strong>80% lead-time reduction</strong>.</span><span class="es">Lancé la manufactura aditiva en la compañía: exploración, selección tecnológica (Ultimaker) y primeros pilotos, con <strong>80% menos lead time</strong>.</span></p>
+              </li>
+              <li class="phase">
+                <h4><span class="en">Head · Center of Excellence</span><span class="es">Jefa · Centro de Excelencia</span></h4>
+                <p><span class="en">Standardized processes and built the management system for printed parts: governance, change management (MOC), TPM integration and HACCP validation. Created the Center of Excellence in Additive Manufacturing, with hub-and-spoke governance.</span><span class="es">Estandaricé procesos y construí el sistema de gestión de piezas impresas: gobernanza, gestión del cambio (MOC), integración con TPM y validación HACCP. Creé el Centro de Excelencia en Manufactura Aditiva, con gobernanza hub and spoke.</span></p>
+              </li>
+              <li class="phase">
+                <h4><span class="en">Expansion · Today</span><span class="es">Expansión · Hoy</span></h4>
+                <p><span class="en">Extended the technology to more plants and trained <strong>more than 40</strong> designers, mechanics and engineers. Cumulative cost avoidance estimated at <strong>about US$300K</strong> from 2022 to 2026.</span><span class="es">Extendí la tecnología a más plantas y capacité a <strong>más de 40</strong> diseñadores, mecánicos e ingenieros. Gasto evitado acumulado estimado de <strong>unos US$300 mil</strong> entre 2022 y 2026.</span></p>
+              </li>
+            </ol>
+            <div class="tl-photos">
+              <button class="shot" type="button" data-full="assets/img/ccu-pieza-en-planta.jpg" data-en="A part in service on the plant floor" data-es="Una pieza en servicio en planta"><img src="assets/img/ccu-pieza-en-planta.jpg" alt="" loading="lazy" width="1400" height="1050"></button>
+              <button class="shot" type="button" data-full="assets/img/ccu-escaneo-3d.jpg" data-en="3D scanning for reverse engineering" data-es="Escaneo 3D para ingeniería inversa"><img src="assets/img/ccu-escaneo-3d.jpg" alt="" loading="lazy" width="1400" height="978"></button>
+            </div>
           </div>
         </article>
 
@@ -424,6 +460,13 @@
               <li><span class="en">Took part in reuse workshops and activations at events such as Lollapalooza Chile, with public institutions and at fairs.</span><span class="es">Participé en workshops y activaciones de reutilización en eventos como Lollapalooza Chile, con entidades públicas y en ferias.</span></li>
               <li><span class="en">Organized and managed the first edition of Juguete x Juguete París (2019).</span><span class="es">Organicé y gestioné la primera versión de Juguete x Juguete París (2019).</span></li>
             </ul>
+            <div class="tl-photos">
+              <button class="shot" type="button" data-full="assets/img/modulab-lolla.jpg" data-en="Reuse workshop at Lollapalooza Chile, 2019" data-es="Workshop de reutilización en Lollapalooza Chile, 2019"><img src="assets/img/modulab-lolla.jpg" alt="" loading="lazy" width="1050" height="1400"></button>
+              <button class="shot" type="button" data-full="assets/img/modulab-billetera.jpg" data-en="Modulab product made from reused material" data-es="Producto de Modulab hecho con material reutilizado"><img src="assets/img/modulab-billetera.jpg" alt="" loading="lazy" width="1050" height="1400"></button>
+              <button class="shot" type="button" data-full="assets/img/modulab-tarjeteros.jpg" data-en="Modulab products" data-es="Productos de Modulab"><img src="assets/img/modulab-tarjeteros.jpg" alt="" loading="lazy" width="1050" height="1400"></button>
+              <button class="shot" type="button" data-full="assets/img/modulab-cinturones.jpg" data-en="Modulab accessories" data-es="Accesorios de Modulab"><img src="assets/img/modulab-cinturones.jpg" alt="" loading="lazy" width="1050" height="1400"></button>
+              <button class="shot" type="button" data-full="assets/img/modulab-laser.jpg" data-en="Laser cutting, 2019" data-es="Corte láser, 2019"><img src="assets/img/modulab-laser.jpg" alt="" loading="lazy" width="1050" height="1400"></button>
+            </div>
           </div>
         </article>
 
@@ -552,6 +595,12 @@
   <span>Chile</span>
 </footer>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
+  <button type="button"><span class="en">Close ✕</span><span class="es">Cerrar ✕</span></button>
+  <img src="" alt="">
+  <p></p>
+</div>
+
 <script>
 (() => {
   'use strict';
@@ -562,7 +611,7 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
   const CONFIG = {
-    linkedin: '',
+    linkedin: 'https://www.linkedin.com/in/fernanda-liz-cabezas-gomez',
     github: 'https://github.com/fernanda-liz',
     photos: []
   };
@@ -633,6 +682,7 @@
     if (m) m.setAttribute('content', DESC[l]);
     $$('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === l)));
     panels.forEach((p, i) => dots[i].setAttribute('aria-label', p.dataset[l] || ''));
+    $$('.shot').forEach(b => b.setAttribute('aria-label', b.dataset[l] || ''));
     store.set('lang', l);
   }
   $$('.lang button').forEach(b => b.addEventListener('click', () => {
@@ -655,17 +705,17 @@
   // Contadores
   const counters = $$('[data-to]');
   const countUp = el => {
-    const to = +el.dataset.to, suf = el.dataset.suf || '';
-    if (reduce) { el.textContent = to + suf; return; }
+    const to = +el.dataset.to, suf = el.dataset.suf || '', pre = el.dataset.pre || '';
+    if (reduce) { el.textContent = pre + to + suf; return; }
     const t0 = performance.now(), d = 1500;
     const tick = t => {
       const p = Math.min((t - t0) / d, 1);
-      el.textContent = Math.round(to * (1 - Math.pow(2, -10 * p))) + suf;
-      if (p < 1) requestAnimationFrame(tick); else el.textContent = to + suf;
+      el.textContent = pre + Math.round(to * (1 - Math.pow(2, -10 * p))) + suf;
+      if (p < 1) requestAnimationFrame(tick); else el.textContent = pre + to + suf;
     };
     requestAnimationFrame(tick);
   };
-  if (!reduce) counters.forEach(el => { el.textContent = '0' + (el.dataset.suf || ''); });
+  if (!reduce) counters.forEach(el => { el.textContent = (el.dataset.pre || '') + '0' + (el.dataset.suf || ''); });
   const ioCount = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { countUp(e.target); ioCount.unobserve(e.target); }
   }), { threshold: 0.7 });
@@ -694,6 +744,24 @@
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll);
   onScroll();
+
+  // Visor de fotos
+  const lb = $('#lb'), lbImg = $('img', lb), lbCap = $('p', lb);
+  let lastShot = null;
+  const openLb = btn => {
+    lastShot = btn;
+    const cap = btn.dataset[html.dataset.l] || '';
+    lbImg.src = btn.dataset.full; lbImg.alt = cap; lbCap.textContent = cap;
+    lb.classList.add('open'); body.style.overflow = 'hidden';
+    $('button', lb).focus();
+  };
+  const closeLb = () => {
+    lb.classList.remove('open'); body.style.overflow = '';
+    if (lastShot) lastShot.focus();
+  };
+  $$('.shot').forEach(b => b.addEventListener('click', () => openLb(b)));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('button')) closeLb(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
 
   // Puntero: foco de luz en tarjetas y paralaje de la portada
   doc.addEventListener('pointermove', e => {
