@@ -292,6 +292,7 @@
   a.work { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.7rem 3.2rem 1.7rem 1.7rem; border-radius: 16px; text-decoration: none; }
   a.work::after { content: "→"; position: absolute; right: 1.4rem; top: 1.3rem; color: var(--gold); transition: transform 0.5s var(--ease); }
   a.work:hover::after { transform: translateX(6px); }
+  a.work.wide { grid-column: 1 / -1; }
   a.work h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.35rem; line-height: 1.25; }
   a.work p { margin: 0; color: var(--dim); font-size: 0.93rem; }
   a.work .meta { margin-top: auto; padding-top: 0.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; color: var(--gold); }
@@ -577,11 +578,17 @@
   </section>
 
   <!-- Trabajo publicado -->
-  <section class="panel" id="work" data-nav data-no="06" data-en="Work" data-es="Trabajo">
+  <section class="panel" id="work" data-nav data-no="06" data-en="AI and work" data-es="IA y trabajo">
     <div class="wrap">
-      <p class="kicker rv"><span class="en">06 · Published work</span><span class="es">06 · Trabajo publicado</span></p>
-      <h2 class="rv"><span class="en">Open, documented, <em>repeatable.</em></span><span class="es">Abierto, documentado, <em>repetible.</em></span></h2>
+      <p class="kicker rv"><span class="en">06 · AI and published work</span><span class="es">06 · IA y trabajo publicado</span></p>
+      <h2 class="rv"><span class="en">Software and automation, <em>built with AI.</em></span><span class="es">Software y automatización, <em>hechos con IA.</em></span></h2>
+      <p class="lead rv"><span class="en">Since 2024 I have worked hard with artificial intelligence, especially Claude Code by Anthropic, which lets me program and automate software through vibe coding. I am open to working with other AI tools too.</span><span class="es">Desde 2024 me he dedicado a fondo a la inteligencia artificial, sobre todo a Claude Code, de Anthropic, que me permite programar y automatizar software mediante vibe coding. Estoy abierta a trabajar también con otras IAs.</span></p>
       <div class="cards2">
+        <a class="work wide rv" href="https://github.com/fernanda-liz" target="_blank" rel="noopener">
+          <h3><span class="en">Software and automation with AI</span><span class="es">Software y automatización con IA</span></h3>
+          <p><span class="en">Tools and automations that support my work in additive manufacturing, research and project management, built through vibe coding with Claude Code.</span><span class="es">Herramientas y automatizaciones que apoyan mi trabajo en manufactura aditiva, investigación y gestión de proyectos, hechas mediante vibe coding con Claude Code.</span></p>
+          <span class="meta">CLAUDE CODE · VIBE CODING · <span class="en">OPEN TO OTHER AI</span><span class="es">ABIERTA A OTRAS IAS</span></span>
+        </a>
         <a class="work rv" href="./plantillas/presentaciones/">
           <h3><span class="en">Presentation template</span><span class="es">Plantilla de presentaciones</span></h3>
           <p><span class="en">33 layouts, one for every kind of content: test results, references, flow diagrams. Exportable to PDF, open and documented.</span><span class="es">33 layouts, uno para cada tipo de contenido: resultados de ensayos, referencias, diagramas de flujo. Exportable a PDF, abierta y documentada.</span></p>
