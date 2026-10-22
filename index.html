@@ -180,6 +180,7 @@
   .btn:hover { background: var(--gold); color: var(--bg); transform: translateY(-2px); }
   .btn.solid { background: var(--gold); color: var(--bg); }
   .btn.solid:hover { background: transparent; color: var(--gold); }
+  .btn.mail { text-transform: none; letter-spacing: 0.06em; font-size: 0.82rem; }
   .cue { position: absolute; left: 6vw; bottom: 5vh; z-index: 2; display: flex; align-items: center; gap: 0.9rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
   .cue i { display: block; width: 1px; height: 2.6rem; background: linear-gradient(180deg, var(--gold), transparent); animation: cue 2.4s var(--ease-io) infinite; }
   @keyframes cue { 0% { transform: scaleY(0); transform-origin: 0 0; } 50% { transform: scaleY(1); transform-origin: 0 0; } 51% { transform: scaleY(1); transform-origin: 0 100%; } 100% { transform: scaleY(0); transform-origin: 0 100%; } }
@@ -620,6 +621,7 @@
       <h2 class="rv"><span class="en">Let's <em>talk.</em></span><span class="es"><em>Conversemos.</em></span></h2>
       <p class="lead rv"><span class="en">Open to senior roles in industrial design and additive manufacturing.</span><span class="es">Abierta a roles senior de diseño industrial y manufactura aditiva.</span></p>
       <div class="ctas rv" id="contactCtas"></div>
+      <noscript><p class="lead">fda.lcg [arroba] gmail.com</p></noscript>
     </div>
   </section>
 
@@ -648,6 +650,7 @@
 
   const CONFIG = {
     linkedin: 'https://www.linkedin.com/in/fernanda-liz-cabezas-gomez',
+    email: ['fda.lcg', 'gmail.com'],
     github: 'https://github.com/fernanda-liz',
     // type: 'video' admite src (mp4) y poster opcional
     photos: [
@@ -701,12 +704,17 @@
     if (external) { a.target = '_blank'; a.rel = 'noopener'; }
     a.innerHTML = label;
     cta.appendChild(a);
+    return a;
   };
   if (CONFIG.linkedin) {
     addBtn(CONFIG.linkedin, 'LinkedIn →', true, true);
     const h = doc.createElement('a');
     h.className = 'btn'; h.href = CONFIG.linkedin; h.target = '_blank'; h.rel = 'noopener'; h.textContent = 'LinkedIn →';
     $('#heroCtas').appendChild(h);
+  }
+  if (CONFIG.email) {
+    const addr = CONFIG.email.join('@');
+    addBtn('mailto:' + addr, addr, false, false).classList.add('mail');
   }
   addBtn(CONFIG.github, 'GitHub →', !CONFIG.linkedin, true);
 
