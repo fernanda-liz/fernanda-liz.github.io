@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fernanda Liz Cabezas G. | Industrial Designer, Additive Manufacturing</title>
-<meta name="description" content="Industrial designer with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.">
+<title>Fernanda Liz Cabezas Gómez | Industrial Designer, Illustrator, Additive Manufacturing</title>
+<meta name="description" content="Industrial designer and illustrator with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.">
 <meta name="theme-color" content="#0a0e1c">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Fernanda Liz Cabezas G.">
+<meta property="og:title" content="Fernanda Liz Cabezas Gómez">
 <meta property="og:description" content="Industrial designer. Additive manufacturing, management and maintainability.">
-<meta property="og:image" content="https://fernanda-liz.github.io/assets/img/lapislazuli-portada.jpg">
+<meta property="og:image" content="https://fernanda-liz.github.io/assets/img/portada-mineral.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0e1c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%23d9b25a'%3EFL%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,19 +81,6 @@
   .bar.hide { transform: translateY(-100%); }
   .brand { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; }
   .brand b { color: var(--gold); font-weight: 400; }
-  .nav { display: flex; gap: 1.8rem; }
-  .nav a {
-    position: relative; text-decoration: none; padding: 0.4rem 0;
-    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--dim); transition: color 0.3s ease;
-  }
-  .nav a::after {
-    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
-    background: var(--gold); transform: scaleX(0); transform-origin: 0 50%;
-    transition: transform 0.5s var(--ease);
-  }
-  .nav a:hover, .nav a.on { color: var(--text); }
-  .nav a:hover::after, .nav a.on::after { transform: scaleX(1); }
   .lang { display: flex; gap: 0.1rem; padding: 0.18rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(16, 21, 42, 0.6); }
   .lang button {
     all: unset; cursor: pointer; border-radius: 999px; padding: 0.38rem 0.85rem;
@@ -103,12 +90,36 @@
   .lang button[aria-pressed="true"] { background: var(--gold); color: var(--bg); }
   .lang button:focus-visible, a:focus-visible, .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-  .dots { position: fixed; right: 1.6vw; top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 0.95rem; }
-  .dots a { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background 0.3s ease, transform 0.4s var(--ease); }
-  .dots a.on { background: var(--gold); transform: scale(1.6); }
-  @media (max-width: 1100px) { .dots { display: none; } }
-  @media (max-width: 900px) { .nav { display: none; } }
-
+  .menu { all: unset; display: none; cursor: pointer; padding: 0.5rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(16, 21, 42, 0.6); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text); }
+  .menu:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .side { position: fixed; left: 0; top: 0; bottom: 0; z-index: 45; width: 13.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; padding: 1.7rem 1.5rem; border-right: 1px solid rgba(38, 49, 86, 0.7); background: rgba(10, 14, 28, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .side-brand { text-decoration: none; font-family: var(--mono); font-size: 0.86rem; letter-spacing: 0.24em; text-transform: uppercase; }
+  .side-brand b { color: var(--gold); font-weight: 400; }
+  .side-brand small { display: block; margin-top: 0.55rem; font-size: 0.62rem; letter-spacing: 0.18em; color: var(--dim); }
+  .side-nav { display: grid; gap: 0.1rem; }
+  .side-nav a { position: relative; display: flex; align-items: baseline; gap: 0.8rem; padding: 0.6rem 0 0.6rem 0.95rem; text-decoration: none; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); transition: color 0.3s ease, padding 0.5s var(--ease); }
+  .side-nav a i { font-style: normal; font-size: 0.64rem; color: var(--line); transition: color 0.3s ease; }
+  .side-nav a::before { content: ""; position: absolute; left: 0; top: 50%; width: 2px; height: 0; background: var(--gold); transform: translateY(-50%); transition: height 0.5s var(--ease); }
+  .side-nav a:hover, .side-nav a.on { color: var(--text); }
+  .side-nav a:hover { padding-left: 1.2rem; }
+  .side-nav a.on { padding-left: 1.2rem; }
+  .side-nav a.on::before { height: 1.5rem; }
+  .side-nav a.on i { color: var(--gold); }
+  .side-foot { display: grid; gap: 0.5rem; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .side-foot a { text-decoration: none; color: var(--dim); transition: color 0.3s ease; }
+  .side-foot a:hover { color: var(--gold); }
+  .veil { position: fixed; inset: 0; z-index: 44; background: rgba(6, 9, 20, 0.62); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .veil.open { opacity: 1; pointer-events: auto; }
+  @media (min-width: 1101px) {
+    body { padding-left: 13.5rem; }
+    .bar { left: 13.5rem; justify-content: flex-end; }
+    .bar .brand, .veil { display: none; }
+  }
+  @media (max-width: 1100px) {
+    .menu { display: inline-block; }
+    .side { z-index: 48; transform: translateX(-102%); transition: transform 0.55s var(--ease); background: rgba(10, 14, 28, 0.97); }
+    .side.open { transform: none; }
+  }
   /* Paneles */
   .panel { position: relative; z-index: 1; min-height: 100svh; display: flex; align-items: center; padding: 14vh 6vw 10vh; }
   .wrap { position: relative; z-index: 2; width: 100%; max-width: 70rem; margin: 0 auto; }
@@ -141,7 +152,7 @@
   .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: 0.96; }
   .hero-bg i {
     position: absolute; inset: -4% -2% -4% 30%; opacity: 0;
-    background: url("assets/img/lapislazuli-portada.jpg") right center / cover no-repeat;
+    background: url("assets/img/portada-mineral.jpg") right center / cover no-repeat;
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 42%);
     mask-image: linear-gradient(90deg, transparent 0, #000 42%);
     transform: translate3d(var(--px, 0px), calc(var(--py, 0px) + var(--sy, 0px)), 0) scale(1.06);
@@ -242,6 +253,8 @@
   .lb { position: fixed; inset: 0; z-index: 90; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 4vh 4vw; background: rgba(6, 9, 20, 0.93); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   .lb.open { display: flex; animation: lbIn 0.4s var(--ease); }
   .lb img { max-width: min(92vw, 1100px); max-height: 78vh; object-fit: contain; border: 1px solid var(--line); border-radius: 10px; }
+  .lb video { max-width: min(92vw, 1100px); max-height: 78vh; border: 1px solid var(--line); border-radius: 10px; background: #000; }
+  .lb img[hidden], .lb video[hidden] { display: none; }
   .lb p { margin: 0; text-align: center; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; color: var(--dim); }
   .lb button { all: unset; position: absolute; top: 1.2rem; right: 1.6rem; padding: 0.5rem 0.8rem; cursor: pointer; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.16em; color: var(--gold); }
   .lb button:focus-visible { outline: 2px solid var(--gold); }
@@ -286,6 +299,11 @@
   .gallery figure { position: relative; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); aspect-ratio: 4 / 3; }
   .gallery figure:nth-child(4n+1), .gallery figure:nth-child(4n) { grid-column: span 7; }
   .gallery figure:nth-child(4n+2), .gallery figure:nth-child(4n+3) { grid-column: span 5; }
+  .gallery figure:only-child { grid-column: span 6; aspect-ratio: 1 / 1; }
+  .gallery .shot { display: block; width: 100%; height: 100%; aspect-ratio: auto; border: 0; border-radius: 0; }
+  .gallery .shot video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .shot[data-video]::after { content: "▶"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.8rem; color: var(--gold); text-shadow: 0 0 14px rgba(0, 0, 0, 0.7); pointer-events: none; }
+  .gallery figcaption { pointer-events: none; }
   .gallery img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
   .gallery figure:hover img { transform: scale(1.04); }
   .gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem 0.9rem 0.7rem; background: linear-gradient(0deg, rgba(10, 14, 28, 0.88), transparent); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; }
@@ -310,34 +328,31 @@
 <div id="progress" aria-hidden="true"></div>
 
 <header class="bar" id="bar">
-  <a class="brand" href="#top" aria-label="Fernanda Liz Cabezas G."><b>F</b>L<b>C</b>G</a>
-  <nav class="nav" aria-label="Sections">
-    <a href="#profile"><span class="en">Profile</span><span class="es">Perfil</span></a>
-    <a href="#experience"><span class="en">Experience</span><span class="es">Experiencia</span></a>
-    <a href="#education"><span class="en">Education</span><span class="es">Formación</span></a>
-    <a href="#research"><span class="en">Research</span><span class="es">Investigación</span></a>
-    <a href="#work"><span class="en">Work</span><span class="es">Trabajo</span></a>
-    <a href="#photography" data-optional><span class="en">Photography</span><span class="es">Fotografía</span></a>
-    <a href="#contact"><span class="en">Contact</span><span class="es">Contacto</span></a>
-  </nav>
+  <a class="brand" href="#top" aria-label="Fernanda Liz Cabezas Gómez"><b>F</b>L<b>C</b>G</a>
+  <button class="menu" type="button" aria-controls="side" aria-expanded="false"><span class="en">Menu</span><span class="es">Menú</span></button>
   <div class="lang" role="group" aria-label="Language / Idioma">
     <button type="button" data-set="en" aria-pressed="true">EN</button>
     <button type="button" data-set="es" aria-pressed="false">ES</button>
   </div>
 </header>
-<nav class="dots" aria-label="Section dots"></nav>
+<aside class="side" id="side">
+  <a class="side-brand" href="#top"><b>F</b>L<b>C</b>G<small><span class="en">Portfolio</span><span class="es">Portafolio</span></small></a>
+  <nav class="side-nav" aria-label="Sections"></nav>
+  <div class="side-foot" id="sideFoot"></div>
+</aside>
+<div class="veil" id="veil"></div>
 
 <main>
 
   <!-- Portada -->
-  <section class="panel hero" id="top" data-nav data-en="Top" data-es="Inicio">
+  <section class="panel hero" id="top" data-nav data-no="00" data-en="Home" data-es="Inicio">
     <div class="hero-bg" aria-hidden="true"><i></i></div>
     <canvas id="flecks" aria-hidden="true"></canvas>
     <div class="wrap">
-      <p class="eyebrow rv"><span class="en">Industrial Designer · Additive Manufacturing</span><span class="es">Diseñadora industrial · Manufactura aditiva</span></p>
-      <h1 class="h1" aria-label="Fernanda Liz Cabezas G.">
+      <p class="eyebrow rv"><span class="en">Industrial Designer · Illustrator · Additive Manufacturing</span><span class="es">Diseñadora industrial · Ilustradora · Manufactura aditiva</span></p>
+      <h1 class="h1" aria-label="Fernanda Liz Cabezas Gómez">
         <span class="line"><span style="--i:0">Fernanda Liz</span></span>
-        <span class="line"><span style="--i:1">Cabezas G.</span></span>
+        <span class="line"><span style="--i:1">Cabezas Gómez</span></span>
       </h1>
       <div class="rule"></div>
       <p class="lead rv">
@@ -357,7 +372,7 @@
   </section>
 
   <!-- Perfil -->
-  <section class="panel" id="profile" data-nav data-en="Profile" data-es="Perfil">
+  <section class="panel" id="profile" data-nav data-no="01" data-en="Profile" data-es="Perfil">
     <div class="wrap">
       <p class="kicker rv"><span class="en">01 · Profile</span><span class="es">01 · Perfil</span></p>
       <div class="grid2">
@@ -406,7 +421,7 @@
   </section>
 
   <!-- Experiencia -->
-  <section class="panel" id="experience" data-nav data-en="Experience" data-es="Experiencia">
+  <section class="panel" id="experience" data-nav data-no="02" data-en="Experience" data-es="Experiencia">
     <div class="wrap">
       <p class="kicker rv"><span class="en">02 · Experience</span><span class="es">02 · Experiencia</span></p>
       <h2 class="rv"><span class="en">From the workshop <em>to the plant.</em></span><span class="es">Del taller <em>a la planta.</em></span></h2>
@@ -421,7 +436,7 @@
             <ol class="phases">
               <li class="phase">
                 <h4><span class="en">Pioneer · 2022</span><span class="es">Pionera · 2022</span></h4>
-                <p><span class="en">Launched additive manufacturing at the company: exploration, technology selection (Ultimaker) and first pilots, with an <strong>80% lead-time reduction</strong>.</span><span class="es">Lancé la manufactura aditiva en la compañía: exploración, selección tecnológica (Ultimaker) y primeros pilotos, con <strong>80% menos lead time</strong>.</span></p>
+                <p><span class="en">Launched additive manufacturing at a company partnered with two global beverage groups, and implemented CAD/CAM design technology tied to TPM: exploration, technology selection (Ultimaker) and first pilots, with an <strong>80% lead-time reduction</strong>.</span><span class="es">Lancé la manufactura aditiva en una compañía socia de dos grupos globales de bebidas e implementé tecnología de diseño CAD/CAM integrada a TPM: exploración, selección tecnológica (Ultimaker) y primeros pilotos, con <strong>80% menos lead time</strong>.</span></p>
               </li>
               <li class="phase">
                 <h4><span class="en">Head · Center of Excellence</span><span class="es">Jefa · Centro de Excelencia</span></h4>
@@ -429,7 +444,7 @@
               </li>
               <li class="phase">
                 <h4><span class="en">Expansion · Today</span><span class="es">Expansión · Hoy</span></h4>
-                <p><span class="en">Extended the technology to more plants and trained <strong>more than 40</strong> designers, mechanics and engineers. Cumulative cost avoidance estimated at <strong>about US$300K</strong> from 2022 to 2026.</span><span class="es">Extendí la tecnología a más plantas y capacité a <strong>más de 40</strong> diseñadores, mecánicos e ingenieros. Gasto evitado acumulado estimado de <strong>unos US$300 mil</strong> entre 2022 y 2026.</span></p>
+                <p><span class="en">Extended the technology to more plants and trained <strong>more than 40</strong> designers, mechanics and engineers. Cumulative cost avoidance estimated at <strong>about US$300K</strong> from 2022 to 2026. The company was recognized for its digital transformation initiatives in the Americas, with additive manufacturing among the aspects recognized.</span><span class="es">Extendí la tecnología a más plantas y capacité a <strong>más de 40</strong> diseñadores, mecánicos e ingenieros. Gasto evitado acumulado estimado de <strong>unos US$300 mil</strong> entre 2022 y 2026. La compañía fue reconocida por sus iniciativas de transformación digital en América, con la manufactura aditiva entre los aspectos destacados.</span></p>
               </li>
             </ol>
             <div class="tl-photos">
@@ -486,7 +501,7 @@
   </section>
 
   <!-- Formación -->
-  <section class="panel" id="education" data-nav data-en="Education" data-es="Formación">
+  <section class="panel" id="education" data-nav data-no="03" data-en="Education" data-es="Formación">
     <div class="wrap">
       <p class="kicker rv"><span class="en">03 · Education and certifications</span><span class="es">03 · Formación y certificaciones</span></p>
       <h2 class="rv"><span class="en">Design, management systems, <em>and research.</em></span><span class="es">Diseño, sistemas de gestión <em>e investigación.</em></span></h2>
@@ -518,37 +533,31 @@
   </section>
 
   <!-- Investigación -->
-  <section class="panel" id="research" data-nav data-en="Research" data-es="Investigación">
+  <section class="panel" id="research" data-nav data-no="04" data-en="Research" data-es="Investigación">
     <div class="wrap">
       <p class="kicker rv"><span class="en">04 · Current research</span><span class="es">04 · Investigación actual</span></p>
       <div class="grid2">
         <div>
           <h2 class="rv"><span class="en">Mineral composites <em>for 3D printing.</em></span><span class="es">Composites minerales <em>para impresión 3D.</em></span></h2>
-          <p class="lead rv"><span class="en">My Master's research explores a biocomposite that uses lapis lazuli waste as a filler. In the first prototype, resin cured with lapis lazuli powder at three nominal loadings (7, 15 and 25 wt%) plus a control: transparency drops as loading rises, yet every loading still prints.</span><span class="es">Mi investigación del magíster explora un biocomposite que usa merma de lapislázuli como carga. En el primer prototipo, la resina curó con polvo de lapislázuli en tres cargas nominales (7, 15 y 25 wt%) más un control: la transparencia baja al subir la carga, pero todas imprimen.</span></p>
+          <p class="lead rv"><span class="en">My Master's research explores a biocomposite that uses as filler a mineral made from the remnants of artisans in Chile. In the first prototype, resin cured with the mineral powder at three nominal loadings (7, 15 and 25 wt%) plus a control: transparency drops as loading rises, yet every loading still prints.</span><span class="es">Mi investigación del magíster explora un biocomposite que usa como carga un mineral a base de remanentes de artesanos en Chile. En el primer prototipo, la resina curó con el polvo del mineral en tres cargas nominales (7, 15 y 25 wt%) más un control: la transparencia baja al subir la carga, pero todas imprimen.</span></p>
           <span class="tag rv"><span class="en">Preliminary evidence of process feasibility</span><span class="es">Evidencia preliminar de factibilidad de proceso</span></span>
-          <div class="rv"><a class="btn" href="./presentaciones/prototipado-mediana-resolucion-resina/"><span class="en">Read the final delivery</span><span class="es">Leer la entrega final</span> →</a></div>
         </div>
         <div class="strip">
-          <figure style="--i:0"><img src="assets/img/prototipo-control.jpg" alt="Resin matrix without lapis lazuli powder (control)" loading="lazy"><figcaption>CONTROL</figcaption></figure>
-          <figure style="--i:1"><img src="assets/img/prototipo-7wt.jpg" alt="Resin matrix with 7 wt% lapis lazuli powder" loading="lazy"><figcaption>7 WT%</figcaption></figure>
-          <figure style="--i:2"><img src="assets/img/prototipo-15wt.jpg" alt="Resin matrix with 15 wt% lapis lazuli powder" loading="lazy"><figcaption>15 WT%</figcaption></figure>
-          <figure style="--i:3"><img src="assets/img/prototipo-25wt.jpg" alt="Resin matrix with 25 wt% lapis lazuli powder" loading="lazy"><figcaption>25 WT%</figcaption></figure>
+          <figure style="--i:0"><img src="assets/img/prototipo-control.jpg" alt="Resin matrix without mineral powder (control)" loading="lazy"><figcaption>CONTROL</figcaption></figure>
+          <figure style="--i:1"><img src="assets/img/prototipo-7wt.jpg" alt="Resin matrix with 7 wt% mineral powder" loading="lazy"><figcaption>7 WT%</figcaption></figure>
+          <figure style="--i:2"><img src="assets/img/prototipo-15wt.jpg" alt="Resin matrix with 15 wt% mineral powder" loading="lazy"><figcaption>15 WT%</figcaption></figure>
+          <figure style="--i:3"><img src="assets/img/prototipo-25wt.jpg" alt="Resin matrix with 25 wt% mineral powder" loading="lazy"><figcaption>25 WT%</figcaption></figure>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Trabajo publicado -->
-  <section class="panel" id="work" data-nav data-en="Work" data-es="Trabajo">
+  <section class="panel" id="work" data-nav data-no="05" data-en="Work" data-es="Trabajo">
     <div class="wrap">
       <p class="kicker rv"><span class="en">05 · Published work</span><span class="es">05 · Trabajo publicado</span></p>
       <h2 class="rv"><span class="en">Open, documented, <em>repeatable.</em></span><span class="es">Abierto, documentado, <em>repetible.</em></span></h2>
       <div class="cards2">
-        <a class="work rv" href="./presentaciones/prototipado-mediana-resolucion-resina/">
-          <h3><span class="en">Prototyping: final delivery</span><span class="es">Prototipado: entrega final</span></h3>
-          <p><span class="en">A mid-resolution sensory prototype in lapis lazuli resin, including why the benchy holes do not go through, even in the control.</span><span class="es">Un prototipo sensorial de mediana resolución en resina con lapislázuli, incluyendo por qué los agujeros del benchy no atraviesan, incluso en el control.</span></p>
-          <span class="meta"><span class="en">9 SLIDES · OCT 2026</span><span class="es">9 DIAPOSITIVAS · OCT 2026</span></span>
-        </a>
         <a class="work rv" href="./plantillas/presentaciones/">
           <h3><span class="en">Presentation template</span><span class="es">Plantilla de presentaciones</span></h3>
           <p><span class="en">33 layouts, one for every kind of content: test results, references, flow diagrams. Exportable to PDF, open and documented.</span><span class="es">33 layouts, uno para cada tipo de contenido: resultados de ensayos, referencias, diagramas de flujo. Exportable a PDF, abierta y documentada.</span></p>
@@ -559,17 +568,12 @@
           <p><span class="en">A documented method to organize knowledge and work: themed vaults, reusable skills and a research flow with Zotero and APA 7.</span><span class="es">Un método documentado para organizar conocimiento y trabajo: bóvedas temáticas, skills reutilizables y un flujo de investigación con Zotero y APA 7.</span></p>
           <span class="meta">GITHUB</span>
         </a>
-        <a class="work rv" href="./materiales/">
-          <h3><span class="en">All published materials</span><span class="es">Todos los materiales publicados</span></h3>
-          <p><span class="en">Templates, research artifacts and course presentations as they become available.</span><span class="es">Plantillas, artefactos de investigación y presentaciones de cursos a medida que se publican.</span></p>
-          <span class="meta"><span class="en">INDEX</span><span class="es">ÍNDICE</span></span>
-        </a>
       </div>
     </div>
   </section>
 
   <!-- Fotografía -->
-  <section class="panel" id="photography" data-nav data-optional data-en="Photography" data-es="Fotografía">
+  <section class="panel" id="photography" data-nav data-no="06" data-optional data-en="Photography" data-es="Fotografía">
     <div class="wrap">
       <p class="kicker rv"><span class="en">06 · Through the lens</span><span class="es">06 · A través del lente</span></p>
       <h2 class="rv"><span class="en">Analog <em>photography.</em></span><span class="es">Fotografía <em>analógica.</em></span></h2>
@@ -579,7 +583,7 @@
   </section>
 
   <!-- Contacto -->
-  <section class="panel contact" id="contact" data-nav data-en="Contact" data-es="Contacto">
+  <section class="panel contact" id="contact" data-nav data-no="07" data-en="Contact" data-es="Contacto">
     <div class="wrap">
       <p class="kicker rv"><span class="en">07 · Contact</span><span class="es">07 · Contacto</span></p>
       <h2 class="rv"><span class="en">Let's <em>talk.</em></span><span class="es"><em>Conversemos.</em></span></h2>
@@ -591,13 +595,14 @@
 </main>
 
 <footer>
-  <span>© 2026 Fernanda Liz Cabezas G.</span>
+  <span>© 2026 Fernanda Liz Cabezas Gómez</span>
   <span>Chile</span>
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <button type="button"><span class="en">Close ✕</span><span class="es">Cerrar ✕</span></button>
   <img src="" alt="">
+  <video controls playsinline hidden></video>
   <p></p>
 </div>
 
@@ -613,15 +618,18 @@
   const CONFIG = {
     linkedin: 'https://www.linkedin.com/in/fernanda-liz-cabezas-gomez',
     github: 'https://github.com/fernanda-liz',
-    photos: []
+    // type: 'video' admite src (mp4) y poster opcional
+    photos: [
+      { src: 'assets/img/foto-zenit.jpg', en: 'Zenit 12 XP', es: 'Zenit 12 XP' }
+    ]
   };
   const TITLE = {
-    en: 'Fernanda Liz Cabezas G. | Industrial Designer, Additive Manufacturing',
-    es: 'Fernanda Liz Cabezas G. | Diseñadora industrial, Manufactura aditiva'
+    en: 'Fernanda Liz Cabezas Gómez | Industrial Designer, Illustrator, Additive Manufacturing',
+    es: 'Fernanda Liz Cabezas Gómez | Diseñadora industrial, Ilustradora, Manufactura aditiva'
   };
   const DESC = {
-    en: "Industrial designer with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.",
-    es: 'Diseñadora industrial con más de ocho años de práctica en fabricación digital, economía circular y manufactura aditiva industrial. Magíster en Ciencias del Diseño, UAI.'
+    en: "Industrial designer and illustrator with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.",
+    es: 'Diseñadora industrial e ilustradora con más de ocho años de práctica en fabricación digital, economía circular y manufactura aditiva industrial. Magíster en Ciencias del Diseño, UAI.'
   };
   const store = { set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 
@@ -637,7 +645,12 @@
       if (p.placeholder) {
         f.innerHTML = '<div class="ph">Photo</div>';
       } else {
-        f.innerHTML = '<img loading="lazy" src="' + p.src + '" alt="' + (p.en || '') + '">' +
+        const vid = p.type === 'video';
+        const media = vid && !p.poster
+          ? '<video muted playsinline preload="metadata" src="' + p.src + '#t=0.5"></video>'
+          : '<img loading="lazy" src="' + (vid ? p.poster : p.src) + '" alt="">';
+        f.innerHTML = '<button class="shot" type="button" data-full="' + p.src + '"' + (vid ? ' data-video="1"' : '') +
+          ' data-en="' + (p.en || '') + '" data-es="' + (p.es || p.en || '') + '">' + media + '</button>' +
           ((p.en || p.es) ? '<figcaption><span class="en">' + (p.en || '') + '</span><span class="es">' + (p.es || p.en || '') + '</span></figcaption>' : '');
       }
       g.appendChild(f);
@@ -661,18 +674,38 @@
     $('#heroCtas').appendChild(h);
   }
   addBtn(CONFIG.github, 'GitHub →', !CONFIG.linkedin, true);
-  addBtn('./materiales/', '<span class="en">Published materials</span><span class="es">Materiales publicados</span> →', false, false);
 
   // Idioma
   const panels = $$('.panel[data-nav]');
-  const dotsWrap = $('.dots');
+  const sideNav = $('.side-nav');
   panels.forEach(p => {
     const a = doc.createElement('a');
     a.href = '#' + p.id;
-    dotsWrap.appendChild(a);
+    a.innerHTML = '<i>' + (p.dataset.no || '·') + '</i><span class="en">' + p.dataset.en + '</span><span class="es">' + p.dataset.es + '</span>';
+    sideNav.appendChild(a);
   });
-  const dots = $$('a', dotsWrap);
-  const navLinks = $$('.nav a');
+  const sideLinks = $$('a', sideNav);
+  const sideFoot = $('#sideFoot');
+  [[CONFIG.linkedin, 'LinkedIn'], [CONFIG.github, 'GitHub']].forEach(([href, label]) => {
+    if (!href) return;
+    const a = doc.createElement('a');
+    a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label + ' →';
+    sideFoot.appendChild(a);
+  });
+  const side = $('#side'), menuBtn = $('.menu'), veil = $('#veil');
+  const setMenu = open => {
+    side.classList.toggle('open', open); veil.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  };
+  menuBtn.addEventListener('click', () => setMenu(!side.classList.contains('open')));
+  veil.addEventListener('click', () => setMenu(false));
+  sideLinks.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    setMenu(false);
+    const target = $(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }));
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
   function applyLang(l) {
     html.dataset.l = l;
@@ -681,7 +714,6 @@
     const m = $('meta[name="description"]');
     if (m) m.setAttribute('content', DESC[l]);
     $$('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === l)));
-    panels.forEach((p, i) => dots[i].setAttribute('aria-label', p.dataset[l] || ''));
     $$('.shot').forEach(b => b.setAttribute('aria-label', b.dataset[l] || ''));
     store.set('lang', l);
   }
@@ -736,8 +768,7 @@
     }
     let active = 0;
     panels.forEach((p, i) => { if (p.getBoundingClientRect().top <= innerHeight * 0.4) active = i; });
-    dots.forEach((d, i) => d.classList.toggle('on', i === active));
-    navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + panels[active].id));
+    sideLinks.forEach((a, i) => a.classList.toggle('on', i === active));
     if (heroBg && !reduce) heroBg.style.setProperty('--sy', (y * 0.12).toFixed(1) + 'px');
     ticking = false;
   }
@@ -746,16 +777,21 @@
   onScroll();
 
   // Visor de fotos
-  const lb = $('#lb'), lbImg = $('img', lb), lbCap = $('p', lb);
+  const lb = $('#lb'), lbImg = $('img', lb), lbVid = $('video', lb), lbCap = $('p', lb);
   let lastShot = null;
   const openLb = btn => {
     lastShot = btn;
     const cap = btn.dataset[html.dataset.l] || '';
-    lbImg.src = btn.dataset.full; lbImg.alt = cap; lbCap.textContent = cap;
+    const isVid = !!btn.dataset.video;
+    lbImg.hidden = isVid; lbVid.hidden = !isVid;
+    if (isVid) { lbVid.src = btn.dataset.full; lbVid.play().catch(() => {}); }
+    else { lbImg.src = btn.dataset.full; lbImg.alt = cap; }
+    lbCap.textContent = cap;
     lb.classList.add('open'); body.style.overflow = 'hidden';
     $('button', lb).focus();
   };
   const closeLb = () => {
+    lbVid.pause(); lbVid.removeAttribute('src'); lbVid.load();
     lb.classList.remove('open'); body.style.overflow = '';
     if (lastShot) lastShot.focus();
   };
@@ -777,7 +813,7 @@
     }
   }, { passive: true });
 
-  // Motas doradas, como la pirita del lapislázuli
+  // Motas doradas
   const canvas = $('#flecks');
   if (canvas && !reduce) {
     const ctx = canvas.getContext('2d');
