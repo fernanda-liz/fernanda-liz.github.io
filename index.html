@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fernanda Liz Cabezas Gómez | Industrial Designer, Illustrator, Additive Manufacturing</title>
-<meta name="description" content="Industrial designer and illustrator with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.">
+<title>Fernanda Liz Cabezas Gómez | Industrial Designer, FDM Additive Manufacturing Expert</title>
+<meta name="description" content="Industrial designer, expert in FDM additive manufacturing with complex materials, with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.">
 <meta name="theme-color" content="#0a0e1c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Fernanda Liz Cabezas Gómez">
 <meta property="og:description" content="Industrial designer. Additive manufacturing, management and maintainability.">
-<meta property="og:image" content="https://fernanda-liz.github.io/assets/img/portada-mineral.jpg">
+<meta property="og:image" content="https://fernanda-liz.github.io/assets/img/foto-zenit.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0e1c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%23d9b25a'%3EFL%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');try{var q=new URLSearchParams(location.search).get('lang');var s=localStorage.getItem('lang');var l=(q==='es'||q==='en')?q:(s||((navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'));document.documentElement.dataset.l=l;document.documentElement.lang=l;}catch(e){}</script>
-<noscript><style>.rv,.rvx,.line>span{opacity:1!important;transform:none!important}.strip figure{clip-path:none!important}.hero-bg i{opacity:1!important}</style></noscript>
+<noscript><style>.rv,.rvx,.line>span{opacity:1!important;transform:none!important}.strip figure{clip-path:none!important}</style></noscript>
 <style>
   :root {
     --bg: #0a0e1c;
@@ -150,25 +150,27 @@
 
   /* Portada */
   .hero { padding-top: 0; padding-bottom: 0; }
-  .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: 0.96; }
-  .hero-bg i {
-    position: absolute; inset: -4% -2% -4% 30%; opacity: 0;
-    background: url("assets/img/portada-mineral.jpg") right center / cover no-repeat;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 42%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 42%);
-    transform: translate3d(var(--px, 0px), calc(var(--py, 0px) + var(--sy, 0px)), 0) scale(1.06);
-    transition: transform 1s var(--ease);
-    animation: bgIn 2s var(--ease) 0.2s forwards;
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4vw; align-items: center; }
+  .hero-text { grid-column: 1; grid-row: 1; }
+  @media (min-width: 901px) {
+    .hero-grid { grid-template-columns: 1.3fr 0.7fr; }
+    .hero-grid .h1 { font-size: clamp(2.8rem, 5.4vw, 5.4rem); }
+    .hero-photo { width: min(100%, 26rem); }
   }
-  .hero-bg::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(120% 90% at 20% 50%, rgba(10, 14, 28, 0) 0, rgba(10, 14, 28, 0.55) 100%),
-      linear-gradient(180deg, rgba(10, 14, 28, 0.6) 0, transparent 25%, transparent 68%, var(--bg) 100%);
+  .hero-photo { position: relative; grid-column: 2; grid-row: 1; justify-self: end; width: min(100%, 30rem); aspect-ratio: 1 / 1; margin: 0; overflow: hidden; border: 1px solid rgba(217, 178, 90, 0.5); border-radius: 18px; box-shadow: 0 40px 90px -40px rgba(217, 178, 90, 0.45); }
+  .hero-photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 62%, rgba(10, 14, 28, 0.55)); }
+  .hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; transform: translate3d(var(--px, 0px), calc(var(--py, 0px) + var(--sy, 0px)), 0) scale(1.08); transition: transform 1s var(--ease); }
+  .hero-photo figcaption { position: absolute; left: 1rem; bottom: 0.8rem; z-index: 1; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); }
+  .js .hero-photo { clip-path: inset(0 0 100% 0); transition: clip-path 1.4s var(--ease-io) 0.35s; }
+  .js .in .hero-photo { clip-path: inset(0 0 0 0); }
+  .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 70% at 78% 50%, rgba(217, 178, 90, 0.1), transparent 70%); }
+  @media (max-width: 900px) {
+    .hero { padding-top: 6rem; padding-bottom: 5rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-photo { grid-column: 1; grid-row: 1; justify-self: start; width: min(100%, 17rem); }
+    .hero-text { grid-row: 2; }
   }
-  @keyframes bgIn { from { opacity: 0; } to { opacity: 1; } }
   #flecks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-  @media (max-width: 800px) { .hero-bg { opacity: 0.5; } .hero-bg i { inset: 0; } }
 
   .eyebrow { margin: 0 0 1.4rem; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
   .h1 { margin: 0 0 1.6rem; font-family: var(--serif); font-weight: 300; font-size: clamp(3rem, 9.2vw, 7.6rem); line-height: 0.98; letter-spacing: -0.025em; }
@@ -320,7 +322,7 @@
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
     .rv, .rvx, .h1 .line > span { opacity: 1 !important; transform: none !important; }
     .strip figure { clip-path: none !important; }
-    .hero-bg i { opacity: 1 !important; }
+    .hero-photo { clip-path: none !important; }
     .rule { width: 6rem !important; }
   }
 </style>
@@ -348,10 +350,11 @@
 
   <!-- Portada -->
   <section class="panel hero" id="top" data-nav data-no="00" data-en="Home" data-es="Inicio">
-    <div class="hero-bg" aria-hidden="true"><i></i></div>
     <canvas id="flecks" aria-hidden="true"></canvas>
-    <div class="wrap">
-      <p class="eyebrow rv"><span class="en">Industrial Designer · Illustrator · Additive Manufacturing</span><span class="es">Diseñadora industrial · Ilustradora · Manufactura aditiva</span></p>
+    <div class="wrap hero-grid">
+      <figure class="hero-photo" id="heroPhoto"><img src="assets/img/foto-zenit.jpg" alt="Fernanda with her Zenit 12 XP film camera" width="1600" height="1600"><figcaption>Zenit 12 XP</figcaption></figure>
+      <div class="hero-text">
+      <p class="eyebrow rv"><span class="en">Industrial Designer · FDM Additive Manufacturing · Complex Materials</span><span class="es">Diseñadora industrial · Manufactura aditiva FDM · Materiales complejos</span></p>
       <h1 class="h1" aria-label="Fernanda Liz Cabezas Gómez">
         <span class="line"><span style="--i:0">Fernanda Liz</span></span>
         <span class="line"><span style="--i:1">Cabezas Gómez</span></span>
@@ -369,6 +372,7 @@
       <div class="ctas rv" id="heroCtas">
         <a class="btn solid" href="#experience"><span class="en">See experience</span><span class="es">Ver experiencia</span> ↓</a>
       </div>
+      </div>
     </div>
     <div class="cue" aria-hidden="true"><i></i><span class="en">Scroll</span><span class="es">Desplaza</span></div>
   </section>
@@ -385,8 +389,8 @@
             <span class="es">En 2022 comencé la manufactura aditiva en una compañía multinacional de bebidas y alimentos. Hoy la lidero: la tecnología pasó de un piloto a más plantas, con un <strong>gasto evitado acumulado estimado de US$300 mil</strong> entre 2022 y 2026.</span>
           </p>
           <p class="lead rv">
-            <span class="en">Industrial designer with <strong>more than eight years</strong> of practice across digital fabrication, circular economy and industrial additive manufacturing. I am also pursuing a Master's in Design Sciences, researching mineral composites for 3D printing, so that what I learn in the lab can reach the plant.</span>
-            <span class="es">Diseñadora industrial con <strong>más de ocho años</strong> de práctica en fabricación digital, economía circular y manufactura aditiva industrial. También curso el Magíster en Ciencias del Diseño, donde investigo composites minerales para impresión 3D, para que lo que aprendo en el laboratorio llegue a la planta.</span>
+            <span class="en">Industrial designer, expert in <strong>FDM additive manufacturing with complex materials</strong> (engineering polymers, fiber-reinforced composites and elastomers), with more than eight years of practice across digital fabrication, circular economy and industry. I am also pursuing a Master's in Design Sciences, researching mineral composites for 3D printing, so that what I learn in the lab can reach the plant.</span>
+            <span class="es">Diseñadora industrial, experta en <strong>manufactura aditiva FDM con materiales complejos</strong> (polímeros de ingeniería, composites reforzados con fibra y elastómeros), con más de ocho años de práctica en fabricación digital, economía circular e industria. También curso el Magíster en Ciencias del Diseño, donde investigo composites minerales para impresión 3D, para que lo que aprendo en el laboratorio llegue a la planta.</span>
           </p>
         </div>
         <div class="areas">
@@ -626,17 +630,16 @@
       { src: 'assets/img/foto-sendero.jpg', w: 1200, h: 1500, en: 'A path under the trees', es: 'Un sendero bajo los árboles' },
       { src: 'assets/img/foto-flores.jpg', w: 1500, h: 1200, en: 'White flowers', es: 'Flores blancas' },
       { src: 'assets/img/foto-gato.jpg', w: 1200, h: 1500, en: 'A cat', es: 'Un gato' },
-      { src: 'assets/img/foto-ciervo.jpg', w: 1500, h: 1200, en: 'Deer drinking', es: 'Ciervo bebiendo' },
-      { src: 'assets/img/foto-zenit.jpg', w: 1600, h: 1600, en: 'Zenit 12 XP', es: 'Zenit 12 XP' }
+      { src: 'assets/img/foto-ciervo.jpg', w: 1500, h: 1200, en: 'Deer drinking', es: 'Ciervo bebiendo' }
     ]
   };
   const TITLE = {
-    en: 'Fernanda Liz Cabezas Gómez | Industrial Designer, Illustrator, Additive Manufacturing',
-    es: 'Fernanda Liz Cabezas Gómez | Diseñadora industrial, Ilustradora, Manufactura aditiva'
+    en: 'Fernanda Liz Cabezas Gómez | Industrial Designer, FDM Additive Manufacturing Expert',
+    es: 'Fernanda Liz Cabezas Gómez | Diseñadora industrial, experta en manufactura aditiva FDM'
   };
   const DESC = {
-    en: "Industrial designer and illustrator with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.",
-    es: 'Diseñadora industrial e ilustradora con más de ocho años de práctica en fabricación digital, economía circular y manufactura aditiva industrial. Magíster en Ciencias del Diseño, UAI.'
+    en: "Industrial designer, expert in FDM additive manufacturing with complex materials, with more than eight years of practice in digital fabrication, circular economy and industrial additive manufacturing. Master's in Design Sciences, UAI.",
+    es: 'Diseñadora industrial, experta en manufactura aditiva FDM con materiales complejos, con más de ocho años de práctica en fabricación digital, economía circular y manufactura aditiva industrial. Magíster en Ciencias del Diseño, UAI.'
   };
   const store = { set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 
@@ -761,7 +764,7 @@
   counters.forEach(el => ioCount.observe(el));
 
   // Scroll: progreso, barra, línea de tiempo, sección activa
-  const bar = $('#bar'), progress = $('#progress'), timeline = $('#timeline'), heroBg = $('.hero-bg i');
+  const bar = $('#bar'), progress = $('#progress'), timeline = $('#timeline'), heroBg = $('.hero-photo img');
   let lastY = 0, ticking = false;
   function onScroll() {
     const y = window.scrollY, max = html.scrollHeight - innerHeight;
